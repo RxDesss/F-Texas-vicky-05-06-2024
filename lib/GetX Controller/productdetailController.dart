@@ -14,6 +14,7 @@ class ProductDetailController extends GetxController {
   Future<void> getProductImage(String productBImage) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=image&image=$productBImage';
+      
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       final body = res.body;
@@ -28,6 +29,7 @@ class ProductDetailController extends GetxController {
   Future<void> getProductDetail(sku) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=product&sku=$sku';
+          print(url);
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
@@ -38,4 +40,19 @@ class ProductDetailController extends GetxController {
       await getProductImage(productBImage);
     }
   }
+
+  Future<void> getProductDetail1(id)async{
+String url='https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=${id}';
+print(url);
+ Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
+var res=await http.get(Uri.parse(url));
+if(res.statusCode==200){
+  final body=res.body;
+  final json=jsonDecode(body);
+  productDetailList=json["data"];
+ String productBImage = productDetailList[0]['product_b_image'];
+      getProductImage(productBImage);
+ 
+}
+}
 }

@@ -183,7 +183,7 @@ class _CartScreeenState extends State<CartScreeen> {
                                     IconButton(
                                       icon: const Icon(Icons.info),
                                       onPressed: () {
-                                        productDetailContoller.getProductDetail(item['id']);
+                                        productDetailContoller.getProductDetail1(item['id']);
                                       },
                                       color: const Color.fromARGB(255, 6, 104, 11),
                                       iconSize: 20.0,

@@ -60,7 +60,7 @@ Widget noCategoryWidget(BuildContext context,  homeController,productDetailConto
             final item = itemsList[itemIndex];
             return InkWell(
               onTap: (){
-                 productDetailContoller.getProductDetail(item["id"]);
+                 productDetailContoller.getProductDetail1(item["id"]);
               },
               child: Container(
                 color: const Color.fromARGB(255, 178, 217, 248),
