@@ -44,7 +44,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 }
 
-// ignore: non_constant_identifier_names
+
 Widget Content(BuildContext context, CartController cartController, ShippingController shippingController, AddressController addressController) {
   return SingleChildScrollView(
     child: Column(

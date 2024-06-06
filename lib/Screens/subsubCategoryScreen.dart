@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,6 @@ Widget subSubCategoryWidget(BuildContext context, HomeController homeController,
           itemCount: itemsList.length,
           itemBuilder: (context, itemIndex) {
             final item = itemsList[itemIndex];
-            print(item);
             return InkWell(
               onTap: () {
                 // productDetailController.getProductDetail(item["id"]);

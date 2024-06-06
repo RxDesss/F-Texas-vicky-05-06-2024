@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
@@ -9,7 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api

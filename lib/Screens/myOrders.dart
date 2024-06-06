@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/myorderController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class MyOrders extends StatefulWidget {
@@ -44,7 +45,7 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Order"),
+        title: const Text("My Order"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -76,26 +77,26 @@ class _MyOrdersState extends State<MyOrders> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Order ID"),
-                                  Text(":"),
-                                Text("${orderId[index]}"),
+                                const Text("Order ID"),
+                                  const Text(":"),
+                                Text(orderId[index]),
                               ],
                             ),
                             Row(
                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Order Date"),
-                                Text(":"),
-                                Text("${orderDate[index]}"),
+                                const Text("Order Date"),
+                                const Text(":"),
+                                Text(orderDate[index]),
                               ],
                             ),
                             Row(
                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Net Amount"),
-                                  Text(":"),
+                                const Text("Net Amount"),
+                                  const Text(":"),
                                 Text(" ${netAmount[index]}"),
                                
                               ],
@@ -115,7 +116,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       Colors.blue, // Set the background color
                                 ),
                                 onPressed: () {},
-                                child: Text("Invoice",style: TextStyle(color: Colors.white),),
+                                child: const Text("Invoice",style: TextStyle(color: Colors.white),),
                               ),
                             )
                           ],

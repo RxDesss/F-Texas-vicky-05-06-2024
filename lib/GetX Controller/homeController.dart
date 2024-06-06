@@ -37,7 +37,6 @@ Future<void> fetchDataAndNavigate(BuildContext context) async {
     if (res.statusCode == 200) {
       final json = jsonDecode(res.body);
       featureProductList.value = json['data'];
-      print(featureProductList);
     } else {
       // print("Feature product list not working");
     }

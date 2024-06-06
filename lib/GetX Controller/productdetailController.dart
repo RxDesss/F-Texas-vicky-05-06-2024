@@ -29,7 +29,6 @@ class ProductDetailController extends GetxController {
   Future<void> getProductDetail(sku) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=product&sku=$sku';
-          print(url);
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
@@ -42,8 +41,7 @@ class ProductDetailController extends GetxController {
   }
 
   Future<void> getProductDetail1(id)async{
-String url='https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=${id}';
-print(url);
+String url='https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=$id';
  Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
 var res=await http.get(Uri.parse(url));
 if(res.statusCode==200){

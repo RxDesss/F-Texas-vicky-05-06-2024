@@ -19,7 +19,7 @@ class CartController extends GetxController {
 
   Future<void> getAddToCart(productId, productQuantity, productSku, productPrice, context) async {
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=${productId}&product_det_qty=${productQuantity}&get_cur_price=${productPrice}&sku=${productSku}&user_email=${loginController.userEmail}&session_ids=123456&based_on=Add';
+    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=$productId&product_det_qty=$productQuantity&get_cur_price=$productPrice&sku=$productSku&user_email=${loginController.userEmail}&session_ids=123456&based_on=Add';
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       final body = res.body;
@@ -81,7 +81,7 @@ class CartController extends GetxController {
 
   Future<void> addProductQuantity(productID, total) async {
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=${productID}';
+    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=$productID';
 
     try {
       var response = await http.get(Uri.parse(url));
@@ -92,7 +92,7 @@ class CartController extends GetxController {
         final json = jsonDecode(body);
         List<dynamic> data = json['data'];
         String sku = data[0]['sku'];
-        var res = await http.get(Uri.parse("https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=${productID}&product_det_qty=1&get_cur_price=${total}&sku=${sku}&user_email=${loginController.userEmail}&session_ids=123456&based_on=Add"));
+        var res = await http.get(Uri.parse("https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=$productID&product_det_qty=1&get_cur_price=$total&sku=$sku&user_email=${loginController.userEmail}&session_ids=123456&based_on=Add"));
         if (res.statusCode == 200) {
           // Handle success
           Get.back();
@@ -109,7 +109,7 @@ class CartController extends GetxController {
 
   Future<void> minusProductQuantity(productID, total) async {
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=${productID}';
+    String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=sku&id=$productID';
 
     try {
       var response = await http.get(Uri.parse(url));
@@ -120,7 +120,7 @@ class CartController extends GetxController {
         final json = jsonDecode(body);
         List<dynamic> data = json['data'];
         String sku = data[0]['sku'];
-        var res = await http.get(Uri.parse("https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=${productID}&product_det_qty=1&get_cur_price=${total}&sku=${sku}&user_email=${loginController.userEmail}&session_ids=123456&based_on=Minus"));
+        var res = await http.get(Uri.parse("https://www.texasknife.com/dynamic/texasknifeapi.php?action=cart&store_id=1&user_id=${loginController.userId}&product_id=$productID&product_det_qty=1&get_cur_price=$total&sku=$sku&user_email=${loginController.userEmail}&session_ids=123456&based_on=Minus"));
         if (res.statusCode == 200) {
           // Handle success
           Get.back();

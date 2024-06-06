@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 // import 'package:flutter_html/flutter_html.dart';
 
@@ -57,7 +58,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               height:MediaQuery.of(context).size.height * 0.3,
               // color: Colors.amber,
@@ -72,7 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   // height:MediaQuery.of(context).size.height * 0.6,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 170, 168, 167),
                   ),
                   padding: const EdgeInsets.all(16.0),
@@ -84,7 +85,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         children: [
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 "Quantity",
                                 style: TextStyle(
                                     fontSize: 16,
@@ -99,7 +100,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           productQuantity++;
                                         });
                                       },
-                                      icon: Icon(Icons.add)),
+                                      icon: const Icon(Icons.add)),
                                   Text('$productQuantity'),
                                   IconButton(
                                       onPressed: () {
@@ -109,7 +110,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           }
                                         });
                                       },
-                                      icon: Icon(Icons.remove)),
+                                      icon: const Icon(Icons.remove)),
                                 ],
                               )
                             ],
@@ -122,9 +123,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               // Add your onPressed function here
                               
                             },
-                            icon: Icon(Icons
+                            icon: const Icon(Icons
                                 .add_shopping_cart), // Add your desired icon here
-                            label: Text("Add To Cart"),
+                            label: const Text("Add To Cart"),
                             // You can customize the width of the button by setting the button's widthFactor
                             // For example, widthFactor: 2.0 will make the button twice as wide
                             // width: 200.0, // Adjust the width according to your preference
@@ -135,8 +136,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       Text(
-                        "${productName}",
-                        style: TextStyle(
+                        productName,
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
@@ -151,7 +152,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("${productSku}"),
+                          child: Text(productSku),
                         ),
                       ),
                       SizedBox(
@@ -159,14 +160,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       Column(
                         children: [
-                          Text(
+                          const Text(
                             "Price :",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
-                          Text("\$ ${productPrice}")
+                          Text("\$ $productPrice")
                         ],
                       ),
                       SizedBox(
@@ -175,7 +176,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Discription :",
                             style: TextStyle(
                                 fontSize: 16,

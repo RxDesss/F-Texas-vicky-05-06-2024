@@ -1,6 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +23,7 @@ class AddressController extends GetxController{
         // print(AddressDatas);
       }
     } catch (e) {
-      print('Error in fetchOldAddress: $e');
+      // print('Error in fetchOldAddress: $e');
     }
   }
 

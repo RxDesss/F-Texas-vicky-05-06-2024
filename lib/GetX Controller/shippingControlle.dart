@@ -163,7 +163,6 @@ class ShippingController extends GetxController {
     String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=${address['bill_town_city']}&shipping_state=${address['bill_state_region1']}&shipping_zip=${address['bill_zip_code']}&ship_country=${address['bill_country']}";
     try {
       var res = await http.get(Uri.parse(url));
-      print(res.statusCode);
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
         shippingMethodsData.assign(json['data'][0]);
@@ -191,7 +190,7 @@ class ShippingController extends GetxController {
   void getEstimatedSalesTax() {
     final baseAmountValue = double.parse(baseAmount.value);
     final shippingTaxValue = double.parse(shippingMethodTax.value.replaceAll('\$', ''));
-    final combinedRateValue = double.parse(combainedRate.value.replaceAll('\%', '')) / 100;
+    final combinedRateValue = double.parse(combainedRate.value.replaceAll('%', '')) / 100;
     final subtotal = baseAmountValue + shippingTaxValue;
     final finalEstimatedTax = combinedRateValue * subtotal;
     

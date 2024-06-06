@@ -20,6 +20,7 @@ class _CartScreeenState extends State<CartScreeen> {
   void _fetchCartData() {
     _futureCartData = cartController.getCartItems();
     _futureCartData.catchError((error) {
+   
     });
   }
 

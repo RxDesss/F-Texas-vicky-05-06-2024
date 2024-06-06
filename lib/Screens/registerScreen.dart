@@ -16,8 +16,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _reEnterPasswordController =
-      TextEditingController();
+  // final TextEditingController _reEnterPasswordController =
+  //     TextEditingController();
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
@@ -62,13 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _submitForm() {
     if (formkey.currentState != null && formkey.currentState!.validate()) {
         registercontroller.fetchRegister(_nameController.text, _emailController.text, _passwordController, context);
-      // Validation passed, perform login or any other action here
-      // String name = _nameController.text;
-      // String password = _passwordController.text;
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => const Login()));
-      print(
-          'Register sucessfull Name:${_nameController.text}, Email: ${_emailController.text}, Password: ${_passwordController.text}');
     }
   }
 
@@ -153,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
              height: MediaQuery.of(context).size.height * 0.04,
                   ),
-                  Container(
+                  SizedBox(
                       width: MediaQuery.of(context).size.height * 0.30,
                       height: MediaQuery.of(context).size.height * 0.055,
                       child: ElevatedButton(
@@ -177,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Get.to(() => LoginScreen());
+                        Get.to(() =>const LoginScreen());
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (context) => const LoginScreen()));
                       },

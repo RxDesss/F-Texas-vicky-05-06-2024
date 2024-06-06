@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:flutter/material.dart';

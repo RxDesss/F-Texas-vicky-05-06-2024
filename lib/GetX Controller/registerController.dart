@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+// ignore_for_file: file_names
 
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +11,14 @@ class RegisterController extends GetxController{
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert'),
-          content: Text('Register Failed'),
+          title: const Text('Alert'),
+          content: const Text('Register Failed'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -29,13 +28,11 @@ class RegisterController extends GetxController{
   
   void fetchRegister(username,email,password,context) async{
    String url='https://trackappt.desss-portfolio.com/dynamic/dynamicapi.php?action=create&table=mobile_app_users&name=$username&email=$email&password=$password';
-  print(password);
   var res=await http.get(Uri.parse(url));
   if(res.statusCode==200){
-    final body=res.body;
-    final json=jsonDecode(body);
-    print(json['data']);
-    Get.to(()=>LoginScreen());
+    // final body=res.body;
+    // final json=jsonDecode(body);
+    Get.to(()=>const LoginScreen());
   }else{
  _showAlertDialog(context);
   }
