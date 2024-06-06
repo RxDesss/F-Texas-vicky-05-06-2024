@@ -145,7 +145,7 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text("Sub Total", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("\$${cartController.totalAmount1.toString().length >= 5 ? cartController.totalAmount1.toString().substring(0, 4) : cartController.totalAmount1.toString()}")
+            Text("\$${cartController.totalAmount1.toString().length >= 5 ? cartController.totalAmount1.toString().substring(0, 5) : cartController.totalAmount1.toString()}")
           ],
         )),
         Obx(() => Row(
@@ -264,10 +264,10 @@ class ShippingOptionTile extends StatefulWidget {
   final String optionValue;
 
   const ShippingOptionTile({
-    Key? key,
+    super.key,
     required this.optionName,
     required this.optionValue,
-  }) : super(key: key);
+  });
 
   @override
   // ignore: library_private_types_in_public_api

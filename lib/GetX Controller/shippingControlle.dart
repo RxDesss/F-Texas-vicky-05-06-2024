@@ -144,7 +144,7 @@ class ShippingController extends GetxController {
   Future<void> fetchOrderTax() async {
     final stateRegion = addressController.AddressDatas[0]['bill_state_region1'];
     String url = "https://www.texasknife.com/dynamic/texasknifeapi.php?action=get_tax_details&shipping_state=$stateRegion";
-    
+ 
     try {
       var res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
@@ -160,9 +160,12 @@ class ShippingController extends GetxController {
 
   Future<void> fetchShippingMethods() async {
     final address = addressController.AddressDatas[0];
-    String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=${address['bill_town_city']}&shipping_state=${address['bill_state_region1']}&shipping_zip=${address['bill_zip_code']}&ship_country=${address['bill_country']}";
+    String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=Katy&shipping_state=Texas&shipping_zip=77494&ship_country=United States";
+    // String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=${address['bill_town_city']}&shipping_state=${address['bill_state_region1']}&shipping_zip=${address['bill_zip_code']}&ship_country=${address['bill_country']}";
+      print(url);
     try {
       var res = await http.get(Uri.parse(url));
+      print(res.statusCode);
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
         shippingMethodsData.assign(json['data'][0]);

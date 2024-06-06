@@ -47,8 +47,8 @@ class CartController extends GetxController {
       List<dynamic> data = json['data'];
 
       for (var item in data) {
-        totalAmount += double.parse(item['total'].toString());
-        totalAmount1.value += double.parse(item['total'].toString());
+        totalAmount = double.parse(item['total'].toString());
+        totalAmount1.value = double.parse(item['total'].toString());
       }
 
       return List<Map<String, dynamic>>.from(data);
