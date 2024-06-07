@@ -40,98 +40,100 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.19,
-                      width: MediaQuery.of(context).size.width * 0.40,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.30,
                       child: Image.asset(
                         'assets/TexasImage.png',
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            initialValue: 'dev@desss.com',
-                            onSaved: (value) {
-                              setState(() {
+                    Container(
+                      padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.05,
+                        left: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              initialValue: 'dev@desss.com',
+                              onSaved: (value) {
                                 username = value;
-                              });
-                            },
-                            decoration:
-                                const InputDecoration(hintText: "Username"),
-                            validator: (value) {
-                              String pattern =
-                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
-                              RegExp regExp = RegExp(pattern);
-                              if (value == null || value.isEmpty) {
-                                return "please enter Email";
-                              } else if (!regExp.hasMatch(value)) {
-                                return 'Enter a valid email address';
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            initialValue: '\$heshU98',
-                            onSaved: (value) {
-                              setState(() {
+                              },
+                              decoration:
+                                  const InputDecoration(hintText: "Username"),
+                              validator: (value) {
+                                String pattern =
+                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                                RegExp regExp = RegExp(pattern);
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter Email";
+                                } else if (!regExp.hasMatch(value)) {
+                                  return 'Enter a valid email address';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              initialValue: '\$heshU98',
+                              onSaved: (value) {
                                 password = value;
-                              });
-                            },
-                            obscureText: true,
-                            validator: (value) {
-                              if (value == null || value.length < 5) {
-                                return "Enter a valid password";
-                              }
-                              return null;
-                            },
-                            decoration:
-                                const InputDecoration(hintText: "Password"),
-                          ),
-                        ],
+                              },
+                              obscureText: true,
+                              validator: (value) {
+                                if (value == null || value.length < 5) {
+                                  return "Enter a valid password";
+                                }
+                                return null;
+                              },
+                              decoration:
+                                  const InputDecoration(hintText: "Password"),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    Obx(() => Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.blue,
+                    Obx(
+                      () => Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFFCC0000),
+                        ),
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: TextButton(
+                          onPressed: logincontroller.isLoading.value
+                              ? null
+                              : () {
+                                  _saveForm(context);
+                                },
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
                           ),
-                          width: MediaQuery.of(context).size.width * 0.60,
-                          child: TextButton(
-                            onPressed: () {
-                              _saveForm(context);
-                            },
-                            child: logincontroller.isLoading.value
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                          ),
-                        )),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                        ),
+                      ),
                     ),
-                    const Text("Don't have an account "),
-                    TextButton(
-                      onPressed: () {
-                        Get.to(() => const RegisterScreen());
-                      },
-                      child: const Text("Sign Up"),
-                    )
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height * 0.04,
+                    // ),
+                    // const Text("Don't have an account "),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Get.to(() => const RegisterScreen());
+                    //   },
+                    //   child: const Text("Sign Up"),
+                    // ),
                   ],
                 ),
               ),

@@ -50,10 +50,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("Profile",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         actions: [
           IconButton(
-            icon: const Icon(Icons.receipt_long),
+            icon: const Icon(Icons.receipt_long,color:Color(0xFFCC0000),),
             onPressed: () {
               myOrderController.getMyOrder(loginController.userId);
             },
@@ -80,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     bottom: 0,
                     child: IconButton(
                       onPressed: _pickedImage,
-                      icon: const Icon(Icons.add_a_photo),
+                      icon: const Icon(Icons.add_a_photo,color:  Color(0xff2a2e7e),),
                     ),
                   ),
                 ],
@@ -93,13 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   "UserName: ",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.025,
+                    fontSize: MediaQuery.of(context).size.height * 0.020,
                     fontWeight: FontWeight.bold,
+                    color: const Color(0xff2a2e7e)
                   ),
                 ),
                 Text(
                   userName ?? '',
-                  style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.02),
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022),
                 ),
               ],
             ),
@@ -109,23 +110,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   "Email: ",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.025,
+                    fontSize: MediaQuery.of(context).size.height * 0.020,
                     fontWeight: FontWeight.bold,
+                    color: const Color(0xff2a2e7e)
                   ),
                 ),
                 Text(
                   email ?? '',
-                  style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.02),
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022),
                 ),
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-            SizedBox(
+            Container(
               height: MediaQuery.of(context).size.height * 0.05,
-              width: MediaQuery.of(context).size.width * 0.38,
+              width: MediaQuery.of(context).size.width * 0.45,
+             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: const Color(0xFFCC0000),),
               child: TextButton(
                 style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
                 ),
                 onPressed: () {
