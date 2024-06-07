@@ -119,7 +119,7 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
                         ),
                       ),
                       Text(
-                        "Total Price: \$${cartController.cartData[index]['total'].toString().substring(0, 5)}",
+                        "Total Price: \$${cartController.cartData[index]['total'].toString().substring(0, 3)}",
                         style: const TextStyle(
                           fontSize: 12,
                         ),
