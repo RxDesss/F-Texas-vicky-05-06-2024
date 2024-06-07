@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    const Text("Don't have an account"),
+                    const Text("Don't have an account "),
                     TextButton(
                       onPressed: () {
                         Get.to(() => const RegisterScreen());
