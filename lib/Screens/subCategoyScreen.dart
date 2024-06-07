@@ -17,7 +17,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sub Category"),
+        title: const Text("Sub Category",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -79,7 +79,7 @@ Widget subCategoryWidget(BuildContext context, HomeController homeController) {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    color: Colors.blue[50],
+                      color: const Color.fromARGB(255, 158, 168, 224),
                     alignment: Alignment.center,
                     child: Text(item["name"]),
                   ),

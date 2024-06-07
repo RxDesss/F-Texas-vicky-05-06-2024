@@ -20,7 +20,7 @@ class _CartScreeenState extends State<CartScreeen> {
   void _fetchCartData() {
     _futureCartData = cartController.getCartItems();
     _futureCartData.catchError((error) {
-   
+      // Handle the error accordingly
     });
   }
 
@@ -30,18 +30,45 @@ class _CartScreeenState extends State<CartScreeen> {
     _fetchCartData();
   }
 
+  void _showDeleteConfirmationDialog(BuildContext context, int itemId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this item from your cart?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                cartController.deleteCartItem(itemId).then((_) => setState(_fetchCartData));
+              },
+              child: const Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Cart"),
+        title: const Text("My Cart", style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e))),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              flex: 12,
+              flex: 7,
               child: FutureBuilder<List<Map<String, dynamic>>>(
                 future: _futureCartData,
                 builder: (context, snapshot) {
@@ -71,11 +98,15 @@ class _CartScreeenState extends State<CartScreeen> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         final item = snapshot.data![index];
+                        final itemId = int.parse(item['id'].toString());
+                        final itemQuantity = int.parse(item['quantity'].toString());
+                        final itemTotal = double.parse(item['total'].toString());
+
                         return Container(
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                           decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 147, 183, 245),
+                            color: Color.fromARGB(255, 158, 168, 224),
                           ),
                           child: Row(
                             children: [
@@ -108,17 +139,17 @@ class _CartScreeenState extends State<CartScreeen> {
                                             iconSize: 18.0,
                                             onPressed: () {
                                               cartController
-                                                  .minusProductQuantity(item['id'], item['total'])
+                                                  .minusProductQuantity(itemId, itemTotal)
                                                   .then((_) => setState(_fetchCartData));
                                             },
                                             icon: const Icon(Icons.remove),
                                           ),
-                                          Text(item['quantity']),
+                                          Text(itemQuantity.toString()),
                                           IconButton(
                                             iconSize: 18.0,
                                             onPressed: () {
                                               cartController
-                                                  .addProductQuantity(item['id'], item['total'])
+                                                  .addProductQuantity(itemId, itemTotal)
                                                   .then((_) => setState(_fetchCartData));
                                             },
                                             icon: const Icon(Icons.add),
@@ -157,7 +188,7 @@ class _CartScreeenState extends State<CartScreeen> {
                                                 "Quantity : ",
                                                 style: TextStyle(fontWeight: FontWeight.bold),
                                               ),
-                                              Text(item['quantity']),
+                                              Text(itemQuantity.toString()),
                                             ],
                                           ),
                                           Row(
@@ -166,7 +197,7 @@ class _CartScreeenState extends State<CartScreeen> {
                                                 "TotalPrice : ",
                                                 style: TextStyle(fontWeight: FontWeight.bold),
                                               ),
-                                              Text("\$ ${item['total'].toString().length >= 5 ? item['total'].toString().substring(0, 5) : item['total'].toString()}"),
+                                              Text("\$ ${itemTotal.toStringAsFixed(2)}"),
                                             ],
                                           ),
                                         ],
@@ -184,7 +215,8 @@ class _CartScreeenState extends State<CartScreeen> {
                                     IconButton(
                                       icon: const Icon(Icons.info),
                                       onPressed: () {
-                                        productDetailContoller.getProductDetail1(item['id']);
+                                        productDetailContoller.getProductDetail1(itemId);
+                                        productDetailContoller.showButton.value = false;
                                       },
                                       color: const Color.fromARGB(255, 6, 104, 11),
                                       iconSize: 20.0,
@@ -192,9 +224,7 @@ class _CartScreeenState extends State<CartScreeen> {
                                     IconButton(
                                       icon: const Icon(Icons.delete),
                                       onPressed: () {
-                                        cartController
-                                            .deleteCartItem(item['id'])
-                                            .then((_) => setState(_fetchCartData));
+                                        _showDeleteConfirmationDialog(context, itemId);
                                       },
                                       color: const Color.fromARGB(255, 243, 34, 34),
                                       iconSize: 20.0,
@@ -212,7 +242,7 @@ class _CartScreeenState extends State<CartScreeen> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Column(
                 children: [
                   Padding(
@@ -221,18 +251,18 @@ class _CartScreeenState extends State<CartScreeen> {
                       children: [
                         const Text(
                           "Sub Total - ",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff2a2e7e)),
                         ),
                         FutureBuilder<List<Map<String, dynamic>>>(
                           future: _futureCartData,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return const Text("...loading", style: TextStyle(color: Colors.red));
                             } else {
                               double totalAmount = 0;
                               if (snapshot.hasData) {
                                 for (var item in snapshot.data!) {
-                                  totalAmount += item['total'];
+                                  totalAmount += double.parse(item['total'].toString());
                                 }
                               }
                               return Text(
@@ -253,12 +283,12 @@ class _CartScreeenState extends State<CartScreeen> {
                         width: double.infinity,
                         margin: const EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
-                          color: isCartEmpty ? Colors.grey : Colors.blueAccent,
+                          color: isCartEmpty ? Colors.grey : const Color(0xFFCC0000),
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextButton(
                           onPressed: isCartEmpty ? null : shippingController.shipping,
-                          child: const Text("Proceed to Checkout"),
+                          child: const Text("Proceed to Checkout", style: TextStyle(color: Colors.white)),
                         ),
                       );
                     },

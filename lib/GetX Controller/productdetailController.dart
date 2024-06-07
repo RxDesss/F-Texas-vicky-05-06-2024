@@ -10,6 +10,7 @@ class ProductDetailController extends GetxController {
   List<dynamic> productDetailList = [];
   String imageName = '';
   String imageUrl = '';
+  RxBool showButton=true.obs;
 
   Future<void> getProductImage(String productBImage) async {
     String url =

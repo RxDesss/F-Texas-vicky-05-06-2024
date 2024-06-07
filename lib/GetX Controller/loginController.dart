@@ -36,6 +36,7 @@ class LoginController extends GetxController {
   }
 
   void fetchLogin(String? username, String? password, BuildContext context) async {
+    Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
    isLoading.value=true;
 
     String url =
@@ -49,9 +50,11 @@ class LoginController extends GetxController {
       userEmail=loginList[0]['email'];
       // ignore: use_build_context_synchronously
       homeContoller.fetchDataAndNavigate(context);
+      Get.back();
     } else {
       // ignore: use_build_context_synchronously
       _showAlertDialog(context);
+      Get.back();
     }
 
  

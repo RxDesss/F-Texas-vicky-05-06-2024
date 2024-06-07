@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +13,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
-  final ProductDetailController productDetailContoller =
-      Get.put(ProductDetailController());
-      final CartController cartController=Get.put(CartController());
+  final ProductDetailController productDetailContoller = Get.put(ProductDetailController());
+  final CartController cartController = Get.put(CartController());
 
   String productName = '';
   String productSku = '';
@@ -25,18 +22,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   String productPrice = '';
   int productQuantity = 1;
   String imageUrl = '';
-  String productId='';
+  String productId = '';
  
-
   void getData() {
- 
     for (var obj in productDetailContoller.productDetailList) {
       setState(() {
         productName = obj['product_name'];
         productSku = obj['sku'];
         productDescription = obj['description'];
         productPrice = obj['product_price'];
-        productId=obj['id'];
+        productId = obj['id'];
       });
     }
   }
@@ -52,7 +47,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Detail'),
+        title: const Text('Product Detail',style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -60,21 +55,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             SizedBox(
               width: double.infinity,
-              height:MediaQuery.of(context).size.height * 0.3,
-              // color: Colors.amber,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.fill,
               ),
             ),
             Expanded(
-              // flex: 7,
               child: SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  // height:MediaQuery.of(context).size.height * 0.6,
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 170, 168, 167),
+                    color: Color.fromARGB(255, 226, 224, 223),
                   ),
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -90,7 +82,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                    color: Color(0xff2a2e7e)),
                               ),
                               Row(
                                 children: [
@@ -115,21 +107,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               )
                             ],
                           ),
-                          FloatingActionButton.extended(
-                            onPressed: () {
-                              cartController.getAddToCart(
-                                productId,productQuantity,productSku,productPrice,context
-                              );
-                              // Add your onPressed function here
-                              
-                            },
-                            icon: const Icon(Icons
-                                .add_shopping_cart), // Add your desired icon here
-                            label: const Text("Add To Cart"),
-                            // You can customize the width of the button by setting the button's widthFactor
-                            // For example, widthFactor: 2.0 will make the button twice as wide
-                            // width: 200.0, // Adjust the width according to your preference
-                          )
+                          Obx(() {
+                            return productDetailContoller.showButton.value
+                                ? FloatingActionButton.extended(
+                                    onPressed: () {
+                                      cartController.getAddToCart(
+                                        productId, productQuantity, productSku, productPrice, context
+                                      );
+                                    },
+                                    icon: const Icon(Icons.add_shopping_cart,color: Colors.white,),
+                                    label: const Text("Add To Cart",style: TextStyle(color: Colors.white),),
+                                    backgroundColor: const Color.fromARGB(255, 243, 34, 34),
+                                  )
+                                : Container();
+                          }),
                         ],
                       ),
                       SizedBox(
@@ -140,7 +131,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                           color: Color(0xff2a2e7e)),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
@@ -165,7 +156,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                color: Color(0xff2a2e7e)),
                           ),
                           Text("\$ $productPrice")
                         ],
@@ -177,11 +168,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Discription :",
+                            "Description :",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                color: Color(0xff2a2e7e)),
                           ),
                           Text(
                             " ${productDescription.replaceAll(RegExp(r'<[^>]*>|<\/[^>]*>'), '')},",

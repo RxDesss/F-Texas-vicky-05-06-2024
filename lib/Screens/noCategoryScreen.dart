@@ -14,13 +14,13 @@ class NoCategoryPage extends StatefulWidget {
 
 class _NoCategoryPageState extends State<NoCategoryPage> {
   final HomeController homeController = Get.put(HomeController());
-  final ProductDetailController productDetailContoller = Get.put(ProductDetailController());
+  final ProductDetailController productDetailController = Get.put(ProductDetailController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("**Grab Bag Deals**"),
+        title: const Text("**Grab Bag Deals**",style: const TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -31,7 +31,7 @@ class _NoCategoryPageState extends State<NoCategoryPage> {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return noCategoryWidget(context, homeController, productDetailContoller);
+              return noCategoryWidget(context, homeController, productDetailController);
             }
           },
         ),
@@ -40,7 +40,7 @@ class _NoCategoryPageState extends State<NoCategoryPage> {
   }
 }
 
-Widget noCategoryWidget(BuildContext context, HomeController homeController, ProductDetailController productDetailContoller) {
+Widget noCategoryWidget(BuildContext context, HomeController homeController, ProductDetailController productDetailController) {
   return Obx(() => ListView.builder(
     itemCount: homeController.noCategoryData.length,
     itemBuilder: (context, index) {
@@ -53,10 +53,11 @@ Widget noCategoryWidget(BuildContext context, HomeController homeController, Pro
           final item = itemsList[itemIndex];
           return InkWell(
             onTap: () {
-              productDetailContoller.getProductDetail1(item["id"]);
+              productDetailController.getProductDetail1(item["id"]);
+              productDetailController.showButton.value=true;
             },
             child: Container(
-              color: const Color.fromARGB(255, 178, 217, 248),
+                 color: const Color.fromARGB(255, 158, 168, 224),
               margin: const EdgeInsets.all(10),
               height: MediaQuery.of(context).size.height * 0.14,
               padding: const EdgeInsets.all(10),
@@ -82,14 +83,16 @@ Widget noCategoryWidget(BuildContext context, HomeController homeController, Pro
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.60,
-                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.50,
+                          height: MediaQuery.of(context).size.height * 0.05,
                           child: Text(
                             item["product_name"] ?? '',
                             overflow: TextOverflow.fade,
                             softWrap: true,
+                            style: const TextStyle(fontWeight: FontWeight.bold,color: Color(0xff2a2e7e)),
                           ),
                         ),
+                        const SizedBox(height: 4,),
                         Text("\$${item["product_price"] ?? ''}"),
                       ],
                     ),

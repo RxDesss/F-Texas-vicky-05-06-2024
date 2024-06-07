@@ -20,9 +20,10 @@ class HomeController extends GetxController {
 
 Future<void> fetchDataAndNavigate(BuildContext context) async {
   isLoading.value=true;
-
+Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
   await fetchFeatureApi();
   await fetchCategoryApi();
+  Get.back();
     // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, '/tabnavigation');
   isLoading.value=false;

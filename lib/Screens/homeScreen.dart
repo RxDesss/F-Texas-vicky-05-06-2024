@@ -106,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               header(context, userName),
-              imageCarousel(context, imageList),
+              // imageCarousel(context, imageList),
               search(context),
-              categoryImage(context, categoryImages),
+              // categoryImage(context, categoryImages),
               featureProducts(
                   context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id,apicategorysku),
               categoryProduct(context, apicategoryName, apicategoryImage,apicategoryId)
@@ -121,22 +121,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget header(BuildContext context, String? userName) {
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Hello',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20,color: Color(0xff2a2e7e)),
               ),
               Text(
-                '$userName ?? '' ',
+                "$userName",
                 style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.020),
+                    fontSize: MediaQuery.of(context).size.height * 0.030,fontWeight: FontWeight.bold,color: const Color(0xff2a2e7e)),
               ),
             ],
           ),
@@ -193,7 +193,7 @@ Widget search(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+              foregroundColor: WidgetStateProperty.all<Color>( const Color(0xff2a2e7e)),
               backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
             ),
             onPressed: () {
@@ -220,7 +220,7 @@ Widget search(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+              foregroundColor: WidgetStateProperty.all<Color>( const Color(0xff2a2e7e)),
               backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
             ),
             onPressed: () {
@@ -292,16 +292,17 @@ Widget categoryImage(context, categoryImages) {
 Widget featureProducts(
     context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id,apicategorysku) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10),
+        padding: EdgeInsets.only(bottom: 10, top: 10,left: 20),
         child: Text(
           "Feature Products ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Color(0xff2a2e7e)),
         ),
       ),
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.20,
+        height: MediaQuery.of(context).size.height * 0.25,
         width: MediaQuery.of(context).size.width,
         //  color: Colors.blue,
         child: ListView.builder(
@@ -313,16 +314,17 @@ Widget featureProducts(
                 // print(index);
                 // getProductDetail(id[index]);
                 productDetailContoller.getProductDetail(apicategorysku[index]);
+                productDetailContoller.showButton.value=true;
               },
               child: Container(
                 width: MediaQuery.of(context).size.width *
-                    0.30, // Set the width of each image container
+                    0.40, // Set the width of each image container
               
                 margin: EdgeInsets.only(
                     left: 10.0,
                     right: index == apiproductImage.length - 1 ? 10.0 : 0),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: const Color.fromARGB(255, 158, 168, 224),
                   borderRadius:
                       BorderRadius.circular(10.0), // Adjust the rounding here
                 ),
@@ -332,11 +334,11 @@ Widget featureProducts(
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.08,
+                      height: MediaQuery.of(context).size.height * 0.12,
                       // color: Colors.amber,
                       child: Image.network(
                         apiproductImage[index],
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Padding(
@@ -364,7 +366,7 @@ Widget featureProducts(
                               child: Text(
                             "${apiproductNames[index]}",
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 11),
+                            style: const TextStyle(fontSize: 12),
                             overflow: TextOverflow.fade,
                           ))),
                     )
@@ -391,7 +393,7 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
           padding: EdgeInsets.only(bottom: 10, top: 10, left: 10),
           child: Text(
             "Products Categories",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Color(0xff2a2e7e)),
           ),
         ),
         SizedBox(
@@ -423,7 +425,7 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 5,right: 5),
-                              child: Text(apicategoryName[index],style: const TextStyle(color: Colors.blueAccent),textAlign:TextAlign.center,),
+                              child: Text(apicategoryName[index],style: const TextStyle(color: Color(0xff2a2e7e)),textAlign:TextAlign.center,),
                             ),
                           ),
                         ),
