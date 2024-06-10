@@ -104,7 +104,7 @@ class _MyOrdersState extends State<MyOrders> {
                                           const Color(0xFFCC0000), // Set the background color
                                     ),
                                     onPressed: () {
-
+                                            myOrderController.getInvoice(order['order_id']);
                                     },
                                     child: const Text("Invoice",style: TextStyle(color: Colors.white),),
                                   ),

@@ -289,7 +289,7 @@ class _CartScreeenState extends State<CartScreeen> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextButton(
-                          onPressed:isCartEmpty ? null :()async{await addressControlle.fetchOldAddress(context);
+                          onPressed:isCartEmpty ? null :()async{await addressControlle.fetchOldAddress();
                          },
                           child: const Text("Proceed to Checkout", style: TextStyle(color: Colors.white)),
                         ),

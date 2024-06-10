@@ -19,7 +19,7 @@ var addressLoading=true.obs;
   
 
   
-  Future<void> fetchOldAddress(context) async {
+  Future<void> fetchOldAddress() async {
     
     String url = "https://www.texasknife.com/dynamic/texasknifeapi.php?action=get_checkoutship&customer_id=${loginController.userId}";
     addressLoading.value=true;
