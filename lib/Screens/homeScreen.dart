@@ -458,6 +458,8 @@ Future<void> scanBarcodeNormal() async {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           "#ff6666", "cancel", true, ScanMode.BARCODE);
+
+           productDetailContoller.getProductDetail(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = "Failed to get platform version";
     }
