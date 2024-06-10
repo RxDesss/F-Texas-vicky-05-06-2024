@@ -59,4 +59,8 @@ class LoginController extends GetxController {
 
  
   }
+    void clear() {
+    loginList.clear();
+    isLoading.value=false;
+  }
 }

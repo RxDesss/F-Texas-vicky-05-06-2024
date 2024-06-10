@@ -98,6 +98,7 @@ class ShippingController extends GetxController {
   }
 
   Future<void> fetchPlaceOrder(BuildContext context) async {
+    Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
     final address = addressController.AddressDatas[0];
     final productData = baseAmountFulldata[0];
     String url = 'https://www.texasknife.com/dynamic/texasknifeapi.php?action=front_counter_insertion'
@@ -118,6 +119,7 @@ class ShippingController extends GetxController {
     try {
       var res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
+        Get.back();
         showDialog(
           // ignore: use_build_context_synchronously
           context: context,
@@ -138,6 +140,7 @@ class ShippingController extends GetxController {
         );
       }
     } catch (e) {
+       Get.back();
       // Handle error
     }
   }

@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'dart:io';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/myorderController.dart';
@@ -40,6 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  void clearControllers() {
+    loginController.clear();
+    myOrderController.clear();
+    navigationController.clear();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,10 +54,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
+        title: const Text("Profile", style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e))),
         actions: [
           IconButton(
-            icon: const Icon(Icons.receipt_long,color:Color(0xFFCC0000),),
+            icon: const Icon(Icons.receipt_long, color: Color(0xFFCC0000)),
             onPressed: () {
               myOrderController.getMyOrder(loginController.userId);
             },
@@ -80,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     bottom: 0,
                     child: IconButton(
                       onPressed: _pickedImage,
-                      icon: const Icon(Icons.add_a_photo,color:  Color(0xff2a2e7e),),
+                      icon: const Icon(Icons.add_a_photo, color: Color(0xff2a2e7e)),
                     ),
                   ),
                 ],
@@ -95,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.020,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xff2a2e7e)
+                    color: const Color(0xff2a2e7e),
                   ),
                 ),
                 Text(
@@ -112,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.020,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xff2a2e7e)
+                    color: const Color(0xff2a2e7e),
                   ),
                 ),
                 Text(
@@ -125,14 +129,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.45,
-             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: const Color(0xFFCC0000),),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: const Color(0xFFCC0000)),
               child: TextButton(
                 style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/loginscreen');
+                  clearControllers();
+                  Get.offAllNamed('/loginscreen');
                   navigationController.selectedIndex.value = 0;
                 },
                 child: const Row(

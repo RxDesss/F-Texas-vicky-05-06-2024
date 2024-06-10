@@ -15,7 +15,7 @@ class ShippingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shipping"),
+        title: const Text("Shipping",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -25,7 +25,7 @@ class ShippingScreen extends StatelessWidget {
             Expanded(
               flex: 9,
               child: Container(
-                color: const Color.fromARGB(255, 183, 244, 252),
+                color: Colors.white,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,6 +55,9 @@ class ShippingScreen extends StatelessWidget {
                   onPressed: isShippingMethodSelected ? () {
                     shippingController.fetchContinueToPayment();
                   } : null,
+                  style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white, backgroundColor: isShippingMethodSelected ?  const Color(0xFFCC0000) : Colors.grey, disabledForegroundColor: Colors.grey.withOpacity(0.38), disabledBackgroundColor: Colors.grey.withOpacity(0.12), // Disabled color
+      ),
                   child: Text(isShippingMethodSelected ? "Payment" : "Select Shipping Method"),
                 );
               }),
@@ -71,7 +74,7 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
     padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     decoration: BoxDecoration(
-      color: Colors.amber[50],
+       color: const Color.fromARGB(255, 158, 168, 224),
       borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
       boxShadow: [
         BoxShadow(
@@ -187,12 +190,18 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
     children: [
       const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text("Shipping Method", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text("Shipping Method", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color:  Color(0xff2a2e7e))),
       ),
       Container(
         height: MediaQuery.of(context).size.height * 0.4,
         width: double.infinity,
-        color: const Color.fromARGB(255, 248, 243, 242),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+    margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+        decoration:const BoxDecoration(
+        color:  Color.fromARGB(255, 158, 168, 224),
+        borderRadius: BorderRadius.all(Radius.circular(20))
+        ),
+         
         child: Obx(
           () => shippingController.shippingMethodsData.isNotEmpty
               ? ListView.builder(
@@ -208,7 +217,7 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("United Parcel Service", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            child: Text("United Parcel Service", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,
@@ -222,7 +231,7 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("United State Postal Service", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            child: Text("United State Postal Service", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,
@@ -236,7 +245,7 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("Store PickUp", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            child: Text("Store PickUp", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,

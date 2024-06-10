@@ -12,4 +12,6 @@ class NavigationController extends GetxController{
     const CartScreeen(),
     const ProfileScreen()
   ];
+
+  void clear() {}
 }
