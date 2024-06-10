@@ -15,13 +15,12 @@ class NoCategoryPage extends StatefulWidget {
 class _NoCategoryPageState extends State<NoCategoryPage> {
   final HomeController homeController = Get.put(HomeController());
   final ProductDetailController productDetailController = Get.put(ProductDetailController());
-
+final data=Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("**Grab Bag Deals**",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
-        centerTitle: true,
+ title: Text(data.toString(),style: const TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),        centerTitle: true,
       ),
       body: SafeArea(
         child: Obx(
@@ -57,10 +56,13 @@ Widget noCategoryWidget(BuildContext context, HomeController homeController, Pro
               productDetailController.showButton.value=true;
             },
             child: Container(
-                 color: const Color.fromARGB(255, 158, 168, 224),
               margin: const EdgeInsets.all(10),
               height: MediaQuery.of(context).size.height * 0.14,
               padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: const Color(0xddd2d5de),
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.02)
+                      ),
               child: Row(
                 children: [
                   SizedBox(

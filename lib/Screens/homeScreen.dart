@@ -1,27 +1,26 @@
 // ignore_for_file: file_names
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/searchproductController.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 final LoginController loginController = Get.put(LoginController());
 final HomeController homeController = Get.put(HomeController());
-final ProductDetailController productDetailContoller=Get.put(ProductDetailController());
-final SearchProductController searchProductController=Get.put(SearchProductController());
+final ProductDetailController productDetailContoller = Get.put(ProductDetailController());
+final SearchProductController searchProductController = Get.put(SearchProductController());
 
 class _HomeScreenState extends State<HomeScreen> {
   String? userName;
@@ -31,12 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> apicategoryName = [];
   List<String> apicategoryImage = [];
   List<String> apicategorysku = [];
-  List<String> id=[];
-  List<String> apicategoryId=[];
- 
+  List<String> id = [];
+  List<String> apicategoryId = [];
 
-
-  void getProductDetail(id){
+  void getProductDetail(String id) {
     productDetailContoller.getProductDetail(id);
   }
 
@@ -48,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getFeatueProduct() {
+  void getFeatureProduct() {
     for (var obj in homeController.featureProductList) {
       setState(() {
         apiproductPrice.add(obj['product_price']);
@@ -60,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getCategoryProduct() {
+  void getCategoryProduct() {
     for (var obj in homeController.categoryProductList) {
       setState(() {
         apicategoryName.add(obj['name']);
@@ -78,35 +75,39 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add more image URLs here
   ];
 
- 
   @override
   void initState() {
     super.initState();
     getData();
-    getFeatueProduct();
-    getCategoryProduct();
+    homeController.fetchData(context); // Ensure you call the method to fetch category products
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              header(context, userName),
-              // imageCarousel(context, imageList),
-              search(context),
-              // categoryImage(context, categoryImages),
-              featureProducts(
-                  context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id,apicategorysku),
-              categoryProduct(context, apicategoryName, apicategoryImage,apicategoryId)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SafeArea(
+      child: Obx(() {
+        if (homeController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (homeController.isScanning.value) { // Show scanning loader if scanning
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                header(context, userName),
+                search(context),
+                Obx(() => featureProducts(context, homeController.featureProductList, getProductDetail)),
+                Obx(() => categoryProduct(context, homeController.categoryProductList)),
+              ],
+            ),
+          );
+        }
+      }),
+    ),
+  );
+}
+
 
   Widget header(BuildContext context, String? userName) {
     return Padding(
@@ -120,27 +121,28 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const Text(
                 'Hello',
-                style: TextStyle(fontSize: 20,color: Color(0xff2a2e7e)),
+                style: TextStyle(fontSize: 20, color: Color(0xff2a2e7e)),
               ),
               Text(
                 "$userName",
                 style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.030,fontWeight: FontWeight.bold,color: const Color(0xff2a2e7e)),
+                    fontSize: MediaQuery.of(context).size.height * 0.030,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xff2a2e7e)),
               ),
             ],
           ),
           Image.asset(
             'assets/TexasImage.png',
-            width: MediaQuery.of(context).size.width * 0.15,
-            height: MediaQuery.of(context).size.height * 0.08,
+            width: MediaQuery.of(context).size.width * 0.12,
+            height: MediaQuery.of(context).size.height * 0.07,
           ),
         ],
       ),
     );
   }
-
- 
 }
+
 Widget search(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
@@ -152,26 +154,23 @@ Widget search(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>( const Color(0xff2a2e7e)),
-              backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
+              foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff2a2e7e)),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
             ),
             onPressed: () {
               searchProductController.fetchAllProduct();
             },
-            // Update starts here
             child: const Row(
-              mainAxisSize:
-                  MainAxisSize.min, // To keep the icon and text close together
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.search, size: 20.0), // Adjust the size as needed
-                SizedBox(width: 4), // Space between icon and text
+                Icon(Icons.search, size: 20.0),
+                SizedBox(width: 4),
                 Text(
                   'Search Product',
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            // Update ends here
           ),
         ),
         SizedBox(
@@ -179,27 +178,21 @@ Widget search(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>( const Color(0xff2a2e7e)),
+              foregroundColor: WidgetStateProperty.all<Color>(const Color(0xff2a2e7e)),
               backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
             ),
-            onPressed:scanBarcodeNormal,
-            //  () {
-            //   Get.to(()=>QRScanPage());
-            // },
-            // Update starts here
+            onPressed: scanBarcodeNormal,
             child: const Row(
-              mainAxisSize:
-                  MainAxisSize.min, // To keep the icon and text close together
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.camera_alt, size: 20.0), // Adjust the size as needed
-                SizedBox(width: 4), // Space between icon and text
+                Icon(Icons.camera_alt, size: 20.0),
+                SizedBox(width: 4),
                 Text(
                   'Scan Code',
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            // Update ends here
           ),
         ),
       ],
@@ -207,44 +200,38 @@ Widget search(BuildContext context) {
   );
 }
 
-Widget featureProducts(
-    context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id,apicategorysku) {
+
+Widget featureProducts(BuildContext context, List<dynamic> featureProducts, Function getProductDetail) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10,left: 20),
+        padding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
         child: Text(
           "Feature Products ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Color(0xff2a2e7e)),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xff2a2e7e)),
         ),
       ),
       SizedBox(
         height: MediaQuery.of(context).size.height * 0.25,
         width: MediaQuery.of(context).size.width,
-        //  color: Colors.blue,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: homeController.featureProductList.length,
+          itemCount: featureProducts.length,
           itemBuilder: (context, index) {
+            var product = featureProducts[index];
             return InkWell(
-              onTap: (){
-                // print(index);
-                // getProductDetail(id[index]);
-                productDetailContoller.getProductDetail(apicategorysku[index]);
-                productDetailContoller.showButton.value=true;
+              onTap: () {
+                getProductDetail(product['sku']);
+                productDetailContoller.showButton.value = true;
               },
               child: Container(
-                width: MediaQuery.of(context).size.width *
-                    0.40, // Set the width of each image container
-              
-                margin: EdgeInsets.only(
-                    left: 10.0,
-                    right: index == apiproductImage.length - 1 ? 10.0 : 0),
+                width: MediaQuery.of(context).size.width * 0.40,
+                margin: EdgeInsets.only(left: 10.0, right: index == featureProducts.length - 1 ? 10.0 : 0),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 158, 168, 224),
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Adjust the rounding here
+                  border: Border.all(width: 1),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -253,10 +240,11 @@ Widget featureProducts(
                     SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.12,
-                      // color: Colors.amber,
-                      child: Image.network(
-                        apiproductImage[index],
+                      child: CachedNetworkImage(
+                        imageUrl: product['product_image'],
                         fit: BoxFit.fill,
+                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
                     Padding(
@@ -267,11 +255,13 @@ Widget featureProducts(
                         decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(15.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 3),
-                          child: Text(
-                            "\$${apiproductPrice[index]}",
-                            style: const TextStyle(fontSize: 12, color: Colors.white),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 3),
+                            child: Text(
+                              "\$${product['product_price']}",
+                              style: const TextStyle(fontSize: 12, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
@@ -279,14 +269,16 @@ Widget featureProducts(
                     Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.068,
-                          child: Center(
-                              child: Text(
-                            "${apiproductNames[index]}",
+                        height: MediaQuery.of(context).size.height * 0.068,
+                        child: Center(
+                          child: Text(
+                            product['product_name'],
                             textAlign: TextAlign.center,
                             style: const TextStyle(fontSize: 12),
                             overflow: TextOverflow.fade,
-                          ))),
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -299,9 +291,7 @@ Widget featureProducts(
   );
 }
 
-Widget categoryProduct(BuildContext context, List<String> apicategoryName,
-    List<String> apicategoryImage, List<String> apicategoryId) {
-  // Assuming apicategoryName and apicategoryImage are lists of the same length
+Widget categoryProduct(BuildContext context, List<dynamic> categoryProducts) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
@@ -311,55 +301,64 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
           padding: EdgeInsets.only(bottom: 10, top: 10, left: 10),
           child: Text(
             "Products Categories",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Color(0xff2a2e7e)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xff2a2e7e)),
           ),
         ),
         SizedBox(
-          // height: MediaQuery.of(context).size.height * 0.35,
           child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns
-                crossAxisSpacing: 10.0, // Spacing between the columns
-                mainAxisSpacing: 10.0,
-                mainAxisExtent: MediaQuery.of(context).size.height * 0.17,
-              ),
-              itemCount: homeController.categoryProductList.length,
-              itemBuilder: ((context, index) {
-                return InkWell(
-                  onTap: (){
-                    homeController.getSubList(context,apicategoryId[index],apicategoryName[index]);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(border: Border.all(width: 1),borderRadius: BorderRadius.circular(12)),
-                   
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.05 ,
-                          // color: Colors.cyanAccent,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,right: 5),
-                              child: Text(apicategoryName[index],style: const TextStyle(color: Color(0xff2a2e7e)),textAlign:TextAlign.center,),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              mainAxisExtent: MediaQuery.of(context).size.height * 0.17,
+            ),
+            itemCount: categoryProducts.length,
+            itemBuilder: ((context, index) {
+              var category = categoryProducts[index];
+              return InkWell(
+                onTap: () {
+                  homeController.getSubList(context, category['id'], category['name']);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1), borderRadius: BorderRadius.circular(12)),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            child: Text(
+                              category['name'],
+                              style: const TextStyle(color: Color(0xff2a2e7e)),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            // color: CupertinoColors.activeGreen,
-                              width:double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.08,
-                              child: Image.network(apicategoryImage[index],fit: BoxFit.fill,),),
-                        )
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          child: CachedNetworkImage(
+                            imageUrl: category['image'],
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                );
-              })),
+                ),
+              );
+            }),
+          ),
         )
       ],
     ),
@@ -367,15 +366,19 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
 }
 
 Future<void> scanBarcodeNormal() async {
-    // ignore: unused_local_variable
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          "#ff6666", "cancel", true, ScanMode.BARCODE);
+  String barcodeScanRes;
+  try {
+    homeController.isScanning.value = true; // Set scanning to true
+    barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+        "#ff6666", "Cancel", true, ScanMode.BARCODE);
+    homeController.isScanning.value = false; // Set scanning to false
 
-           productDetailContoller.getProductDetail(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = "Failed to get platform version";
+    if (barcodeScanRes != '-1') { // Check if not cancelled
+      productDetailContoller.getProductDetail(barcodeScanRes);
     }
-   
+  } on PlatformException {
+    barcodeScanRes = "Failed to get platform version";
+    homeController.isScanning.value = false; // Set scanning to false in case of error
   }
+}
+
