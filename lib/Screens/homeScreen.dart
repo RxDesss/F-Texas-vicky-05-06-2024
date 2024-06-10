@@ -3,11 +3,9 @@ import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/searchproductController.dart';
-import 'package:demo_project/Screens/QRScanPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -80,19 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add more image URLs here
   ];
 
-  List<String> categoryImages = [
-    'assets/cimg/1.png',
-    'assets/cimg/2.png',
-    'assets/cimg/3.png',
-    'assets/cimg/4.png',
-    'assets/cimg/5.png',
-    'assets/cimg/6.png',
-    'assets/cimg/7.png',
-    'assets/cimg/8.png',
-    'assets/cimg/9.png',
-    'assets/cimg/10.png',
-    'assets/cimg/11.png',
-  ];
+ 
   @override
   void initState() {
     super.initState();
@@ -153,37 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget imageCarousel(BuildContext context, List<String> imageList) {
-    return Center(
-      child: CarouselSlider(
-        options: CarouselOptions(
-          height: MediaQuery.of(context).size.height * 0.20,
-          enlargeCenterPage: true,
-          autoPlay: true,
-          aspectRatio: 4 / 3,
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enableInfiniteScroll: true,
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          viewportFraction: 0.8,
-        ),
-        items: imageList.map((url) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: const BoxDecoration(),
-                child: Image.network(
-                  url,
-                  fit: BoxFit.cover,
-                ),
-              );
-            },
-          );
-        }).toList(), // Convert the mapped iterable to a list
-      ),
-    );
-  }
+ 
 }
 Widget search(BuildContext context) {
   return Padding(
@@ -248,48 +204,6 @@ Widget search(BuildContext context) {
         ),
       ],
     ),
-  );
-}
-
-Widget categoryImage(context, categoryImages) {
-  return Column(
-    children: [
-      const Padding(
-        padding: EdgeInsets.only(bottom: 10),
-        child: Text(
-          "Category Image",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.13,
-        width: MediaQuery.of(context).size.width,
-        //  color: Colors.blue,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categoryImages.length,
-          itemBuilder: (context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width *
-                  0.28, // Set the width of each image container
-
-              margin: EdgeInsets.only(
-                  left: 10.0,
-                  right: index == categoryImages.length - 1 ? 10.0 : 0),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius:
-                    BorderRadius.circular(100.0), // Adjust the rounding here
-                image: DecorationImage(
-                  image: AssetImage(categoryImages[index]),
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    ],
   );
 }
 
