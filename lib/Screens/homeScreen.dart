@@ -5,8 +5,11 @@ import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/searchproductController.dart';
 import 'package:demo_project/Screens/QRScanPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -223,9 +226,10 @@ Widget search(BuildContext context) {
               foregroundColor: WidgetStateProperty.all<Color>( const Color(0xff2a2e7e)),
               backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
             ),
-            onPressed: () {
-              Get.to(()=>QRScanPage());
-            },
+            onPressed:scanBarcodeNormal,
+            //  () {
+            //   Get.to(()=>QRScanPage());
+            // },
             // Update starts here
             child: const Row(
               mainAxisSize:
@@ -447,3 +451,15 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
     ),
   );
 }
+
+Future<void> scanBarcodeNormal() async {
+    // ignore: unused_local_variable
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "cancel", true, ScanMode.BARCODE);
+    } on PlatformException {
+      barcodeScanRes = "Failed to get platform version";
+    }
+   
+  }

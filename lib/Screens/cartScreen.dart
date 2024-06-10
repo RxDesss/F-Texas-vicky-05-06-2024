@@ -1,3 +1,4 @@
+import 'package:demo_project/GetX%20Controller/addressControlle.dart';
 import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
@@ -15,6 +16,7 @@ class _CartScreeenState extends State<CartScreeen> {
   final CartController cartController = Get.put(CartController());
   final ProductDetailController productDetailContoller = Get.put(ProductDetailController());
   final ShippingController shippingController = Get.put(ShippingController());
+     final AddressController addressControlle = Get.put(AddressController());
   late Future<List<Map<String, dynamic>>> _futureCartData;
 
   void _fetchCartData() {
@@ -287,7 +289,8 @@ class _CartScreeenState extends State<CartScreeen> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextButton(
-                          onPressed: isCartEmpty ? null : shippingController.shipping,
+                          onPressed:isCartEmpty ? null :()async{await addressControlle.fetchOldAddress(context);
+                         },
                           child: const Text("Proceed to Checkout", style: TextStyle(color: Colors.white)),
                         ),
                       );

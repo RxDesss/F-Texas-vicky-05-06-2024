@@ -14,6 +14,7 @@ import 'cartController.dart';
 import 'homeController.dart';
 import '../Screens/shippingScreen.dart';
 
+
 class ShippingController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
   final HomeController homeContoller = Get.find();
@@ -36,7 +37,7 @@ class ShippingController extends GetxController {
   List<dynamic> baseAmountFulldata = [].obs;
   void shipping() async {
      Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    await addressController.fetchOldAddress();
+    // await addressController.fetchOldAddress(context);
     await getBaseAmount();
  
     fetchOrderTax();
@@ -159,13 +160,12 @@ class ShippingController extends GetxController {
   }
 
   Future<void> fetchShippingMethods() async {
-    final address = addressController.AddressDatas[0];
+    // final address = addressController.AddressDatas[0];
     String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=Katy&shipping_state=Texas&shipping_zip=77494&ship_country=United States";
     // String url="https://www.texasknife.com/dynamic/texasknifeapi.php?action=ups_shippment_ys&pounds=2&shipping_city=${address['bill_town_city']}&shipping_state=${address['bill_state_region1']}&shipping_zip=${address['bill_zip_code']}&ship_country=${address['bill_country']}";
-      print(url);
+     
     try {
       var res = await http.get(Uri.parse(url));
-      print(res.statusCode);
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
         shippingMethodsData.assign(json['data'][0]);
