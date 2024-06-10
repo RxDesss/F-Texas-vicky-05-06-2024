@@ -12,13 +12,12 @@ class SubCategoryScreen extends StatefulWidget {
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
   final HomeController homeController = Get.put(HomeController());
-
+final data=Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sub Category",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
-        centerTitle: true,
+ title: Text(data.toString(),style: const TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),        centerTitle: true,
       ),
       body: SafeArea(
         child: Obx(
@@ -79,7 +78,7 @@ Widget subCategoryWidget(BuildContext context, HomeController homeController) {
                 Expanded(
                   flex: 2,
                   child: Container(
-                      color: const Color.fromARGB(255, 158, 168, 224),
+                      color: const Color(0xddd2d5de),
                     alignment: Alignment.center,
                     child: Text(item["name"]),
                   ),

@@ -48,9 +48,10 @@ class LoginController extends GetxController {
       loginList = json['data'];
       userId=loginList[0]['id'];
       userEmail=loginList[0]['email'];
-      // ignore: use_build_context_synchronously
-      homeContoller.fetchDataAndNavigate(context);
       Get.back();
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacementNamed(context, '/tabnavigation');
+      
     } else {
       // ignore: use_build_context_synchronously
       _showAlertDialog(context);
