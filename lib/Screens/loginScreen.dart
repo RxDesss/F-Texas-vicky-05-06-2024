@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
-import 'package:demo_project/Screens/registerScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,8 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.30,
+                      height: MediaQuery.of(context).size.height * 0.12,
+                      width: MediaQuery.of(context).size.width * 0.25,
                       child: Image.asset(
                         'assets/TexasImage.png',
                         fit: BoxFit.fill,
@@ -65,13 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 username = value;
                               },
                               decoration:
-                                  const InputDecoration(hintText: "Username"),
+                                  const InputDecoration(hintText: "Email"),
                               validator: (value) {
                                 String pattern =
                                     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                                 RegExp regExp = RegExp(pattern);
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter Email";
+                                  return "Enter Email Id";
                                 } else if (!regExp.hasMatch(value)) {
                                   return 'Enter a valid email address';
                                 }
@@ -85,7 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               obscureText: true,
                               validator: (value) {
-                                if (value == null || value.length < 5) {
+                                if (value == null || value == "" ) {
+                                  return "Enter a password";
+                                }else if (value.length < 5){
                                   return "Enter a valid password";
                                 }
                                 return null;
