@@ -23,7 +23,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Checkout"),
+        title: const Text("Checkout",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -61,7 +61,7 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
     padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     decoration: BoxDecoration(
-      color: Colors.amber[50],
+     color: const Color.fromARGB(255, 158, 168, 224),
       borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
       boxShadow: [
         BoxShadow(
@@ -274,14 +274,14 @@ Widget CheckoutButton(ShippingController shippingController, BuildContext contex
     width: double.infinity,
     margin: const EdgeInsets.symmetric(horizontal: 30),
     decoration: BoxDecoration(
-      color: Colors.blueAccent,
+      color:const Color(0xFFCC0000),
       borderRadius: BorderRadius.circular(25),
     ),
     child: TextButton(
       onPressed: () {
         shippingController.fetchPlaceOrder(context);
       },
-      child: const Text("Place Order"),
+      child: const Text("Place Order",style: TextStyle(color: Colors.white),),
     ),
   );
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +15,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   bool showCardFields = false;
   bool showMoneyOrderField = false;
   bool showCheckNumberField = false;
+  bool isAnyCheckboxSelected = false;
 
   final TextEditingController cardNumberController = TextEditingController();
   final TextEditingController ccvController = TextEditingController();
@@ -26,11 +25,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  void updateCheckboxState() {
+    setState(() {
+      isAnyCheckboxSelected = showCardFields || showMoneyOrderField || showCheckNumberField;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment"),
+        title: const Text("Payment",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -59,6 +64,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         showMoneyOrderField = false;
                         showCheckNumberField = false;
                       }
+                      updateCheckboxState();
                     });
                   },
                   onMoneyOrderCheckboxChanged: (value) {
@@ -68,6 +74,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         showCardFields = false;
                         showCheckNumberField = false;
                       }
+                      updateCheckboxState();
                     });
                   },
                   onCheckNumberCheckboxChanged: (value) {
@@ -77,6 +84,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         showCardFields = false;
                         showMoneyOrderField = false;
                       }
+                      updateCheckboxState();
                     });
                   },
                 ),
@@ -89,9 +97,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.05),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.amber[100]),
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+                      if (states.contains(WidgetState.disabled)) {
+                        return Colors.grey.withOpacity(0.5);
+                      }
+                      return const Color(0xFFCC0000);
+                    }),
                   ),
-                  onPressed: () {
+                  onPressed: isAnyCheckboxSelected ? () {
                     if (_formKey.currentState!.validate()) {
                       if (showCardFields) {
                         shippingController.fetchPayment("Credit Card");
@@ -104,8 +117,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         shippingController.PayWith.value = "Cheque";
                       }
                     }
-                  },
-                  child: const Text('Submit', style: TextStyle(color: Colors.black)),
+                  } : null,
+                  child: const Text('Submit', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
@@ -232,9 +245,9 @@ class PaymentFieldContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-      decoration: BoxDecoration(
-        color: Colors.amber[100],
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+       color: Color.fromARGB(255, 158, 168, 224),
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30.0),
           bottomRight: Radius.circular(30.0),
         ),

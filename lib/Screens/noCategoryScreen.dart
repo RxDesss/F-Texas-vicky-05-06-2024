@@ -20,7 +20,7 @@ class _NoCategoryPageState extends State<NoCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("**Grab Bag Deals**",style: const TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
+        title: const Text("**Grab Bag Deals**",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
         centerTitle: true,
       ),
       body: SafeArea(
