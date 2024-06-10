@@ -5,6 +5,8 @@ import 'package:demo_project/Screens/myOrders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
 
 class MyOrderController extends GetxController {
   var orderList = [].obs;
@@ -30,4 +32,18 @@ class MyOrderController extends GetxController {
   void clear() {
     orderList.value=[];
   }
+
+  Future<void> getInvoice(String orderId) async {
+  String url = "https://www.texasknife.com/dynamic/orderinvoice/order_invoice_$orderId.html";
+  print(url);
+
+  Uri uri = Uri.parse(url);
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    print("Could not launch $url");
+  }
+}
+
 }

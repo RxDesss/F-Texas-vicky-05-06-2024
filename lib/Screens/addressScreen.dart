@@ -124,13 +124,6 @@ class _addressScreenState extends State<addressScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Address"),
-          leading: IconButton(
-            icon:
-                const Icon(Icons.arrow_back), // Wrap the icon with Icon widget
-            onPressed: () {
-              Get.to(() => const CartScreeen());
-            },
-          ),
           centerTitle: true,
         ),
         body: Form(
@@ -459,7 +452,7 @@ class _addressScreenState extends State<addressScreen> {
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
-                                                      return 'Please enter LastName';
+                                                      return 'Please enter FirstName';
                                                     }
                                                     return null;
                                                   },
@@ -482,7 +475,7 @@ class _addressScreenState extends State<addressScreen> {
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
-                                                      return 'Please enter FirstName';
+                                                      return 'Please enter LastName';
                                                     }
                                                     return null;
                                                   },
