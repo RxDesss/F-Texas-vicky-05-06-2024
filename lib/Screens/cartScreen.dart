@@ -107,8 +107,9 @@ class _CartScreeenState extends State<CartScreeen> {
                         return Container(
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 158, 168, 224),
+                          decoration:  BoxDecoration(
+                          color: const Color(0xddd2d5de),
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.02)
                           ),
                           child: Row(
                             children: [
@@ -120,11 +121,11 @@ class _CartScreeenState extends State<CartScreeen> {
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.all(10),
-                                      height: MediaQuery.of(context).size.height * 0.10,
+                                      height: MediaQuery.of(context).size.height * 0.11,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: Colors.blueGrey[50],
+                                        color: const Color(0xddd2d5de),
                                       ),
                                       child: Image.network(
                                         item['product_image'],
@@ -174,13 +175,17 @@ class _CartScreeenState extends State<CartScreeen> {
                                         children: [
                                           SizedBox(
                                             width: double.infinity,
-                                            height: MediaQuery.of(context).size.height * 0.05,
-                                            child: Text(
-                                              item['product_name'],
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.fade,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
+                                            height: MediaQuery.of(context).size.height * 0.06,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top:0.8),
+                                              child: Text(
+                                                item['product_name'],
+                                                style: const TextStyle(
+                                                  overflow: TextOverflow.fade,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                   color: Color(0xff2a2e7e)
+                                                ),
                                               ),
                                             ),
                                           ),
