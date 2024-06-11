@@ -46,6 +46,7 @@ class TabNavigation extends StatelessWidget {
     // Fetch the cart count initially
     cartController.getCartCount();
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => onWillPop(context),
       child: Scaffold(
