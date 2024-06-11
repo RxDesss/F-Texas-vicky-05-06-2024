@@ -59,7 +59,7 @@ class _SearchProductState extends State<SearchProduct> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: (){
-              productDetailContoller.getProductDetail(searchProductController.filteredProducts[index]['sku']);
+              productDetailController.getProductDetail(searchProductController.filteredProducts[index]['sku']);
             },
             child: Container(
               width: MediaQuery.of(context).size.width*0.8,

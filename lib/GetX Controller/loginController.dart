@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

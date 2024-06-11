@@ -15,7 +15,7 @@ class MyOrderController extends GetxController {
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
     String url = "https://www.texasknife.com/dynamic/texasknifeapi.php?action=get_orders&customer_id=$userid";
     var res = await http.get(Uri.parse(url));
-    print(res.statusCode);
+    // print(res.statusCode);
     if (res.statusCode == 200) {
       final body = res.body;
       final json = jsonDecode(body);
@@ -35,14 +35,14 @@ class MyOrderController extends GetxController {
 
   Future<void> getInvoice(String orderId) async {
   String url = "https://www.texasknife.com/dynamic/orderinvoice/order_invoice_$orderId.html";
-  print(url);
+  // print(url);
 
   Uri uri = Uri.parse(url);
 
   if (await canLaunchUrl(uri)) {
     await launchUrl(uri);
   } else {
-    print("Could not launch $url");
+    // print("Could not launch $url");
   }
 }
 

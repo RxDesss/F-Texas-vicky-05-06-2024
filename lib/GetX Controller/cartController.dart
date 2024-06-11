@@ -161,11 +161,11 @@ class CartController extends GetxController {
         cartItemCount.value = data.length;
       } else {
         // Handle the case where the response status is not 200
-        print('Failed to load cart details');
+        // print('Failed to load cart details');
       }
     } catch (error) {
       // Handle any errors that occur during the request
-      print('Error fetching cart details: $error');
+      // print('Error fetching cart details: $error');
     }
   }
 }

@@ -14,12 +14,13 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 final LoginController loginController = Get.put(LoginController());
 final HomeController homeController = Get.put(HomeController());
-final ProductDetailController productDetailContoller = Get.put(ProductDetailController());
+final ProductDetailController productDetailController = Get.put(ProductDetailController());
 final SearchProductController searchProductController = Get.put(SearchProductController());
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> apicategoryId = [];
 
   void getProductDetail(String id) {
-    productDetailContoller.getProductDetail(id);
+    productDetailController.getProductDetail(id);
   }
 
   void getData() {
@@ -154,8 +155,8 @@ Widget search(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff2a2e7e)),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
+              foregroundColor: WidgetStateProperty.all<Color>(const Color(0xff2a2e7e)),
+              backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
             ),
             onPressed: () {
               searchProductController.fetchAllProduct();
@@ -223,7 +224,7 @@ Widget featureProducts(BuildContext context, List<dynamic> featureProducts, Func
             return InkWell(
               onTap: () {
                 getProductDetail(product['sku']);
-                productDetailContoller.showButton.value = true;
+                productDetailController.showButton.value = true;
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.40,
@@ -373,8 +374,10 @@ Future<void> scanBarcodeNormal() async {
         "#ff6666", "Cancel", true, ScanMode.BARCODE);
     homeController.isScanning.value = false; // Set scanning to false
 
-    if (barcodeScanRes != '-1') { // Check if not cancelled
-      productDetailContoller.getProductDetail(barcodeScanRes);
+    if (barcodeScanRes != '-1') {
+        productDetailController.showButton.value=true; // Check if not cancelled
+      productDetailController.getProductDetail(barcodeScanRes);
+    
     }
   } on PlatformException {
     barcodeScanRes = "Failed to get platform version";

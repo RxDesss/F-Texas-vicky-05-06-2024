@@ -132,8 +132,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: const Color(0xFFCC0000)),
               child: TextButton(
                 style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
                 ),
                 onPressed: () {
                   clearControllers();
