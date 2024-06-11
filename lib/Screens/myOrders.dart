@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/myorderController.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +26,10 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Order",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
+        title: const Text(
+          "My Order",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e)),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -51,62 +52,83 @@ class _MyOrdersState extends State<MyOrders> {
                           vertical: MediaQuery.of(context).size.height * 0.015,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 158, 168, 224),
-                          borderRadius: BorderRadius.only(bottomRight:Radius.circular( MediaQuery.of(context).size.height * 0.1)),
+                          color: const Color(0xddd2d5de),
+                          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
                         ),
                         child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.only(left:10,right:10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                                Table(
+                                  columnWidths: const {
+                                    0: FlexColumnWidth(),
+                                    1: FixedColumnWidth(10),
+                                    2: FlexColumnWidth(),
+                                  },
                                   children: [
-                                    const Text("Order ID"),
-                                      const Text(":"),
-                                    Text(order['order_id']),
-                                  ],
-                                ),
-                                Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Text("Order Date"),
-                                    const Text(":"),
-                                    Text(order['created_at']),
-                                  ],
-                                ),
-                                Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Text("Net Amount"),
-                                      const Text(":"),
-                                    Text(" ${order['net_amount']}"),
-                                   
-                                  ],
-                                ),
-                                 SizedBox(
-                                      height: MediaQuery.of(context).size.width * 0.04 ,
+                                    TableRow(
+                                      children: [
+                                        const Text(
+                                          "Order ID",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          ":",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(order['order_id']),
+                                      ],
                                     ),
+                                    TableRow(
+                                      children: [
+                                        const Text(
+                                          "Order Date",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          ":",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(order['created_at']),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        const Text(
+                                          "Net Amount",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          ":",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(" ${order['net_amount']}"),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.width * 0.04,
+                                ),
                                 Container(
                                   width: double.infinity,
-                                  margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width * 0.15,
-                                      right:
-                                          MediaQuery.of(context).size.width * 0.15),
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: MediaQuery.of(context).size.width * 0.15,
+                                  ),
                                   child: TextButton(
                                     style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          const Color(0xFFCC0000), // Set the background color
+                                      backgroundColor: const Color(0xFFCC0000),
                                     ),
                                     onPressed: () {
-                                            myOrderController.getInvoice(order['order_id']);
+                                      myOrderController.getInvoice(order['order_id']);
                                     },
-                                    child: const Text("Invoice",style: TextStyle(color: Colors.white),),
+                                    child: const Text(
+                                      "Invoice",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 )
                               ],

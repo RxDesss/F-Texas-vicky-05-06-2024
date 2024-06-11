@@ -4,8 +4,6 @@ import 'dart:convert';
 
 import 'package:demo_project/Common/commom.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
-import 'package:demo_project/GetX%20Controller/navigationcontroller.dart';
-import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +16,7 @@ class CartController extends GetxController {
   String Message = "";
   double totalAmount = 0.0;
   RxDouble totalAmount1 = 0.0.obs;
+  RxInt cartItemCount=0.obs;
 
 
   Future<void> getAddToCart(
@@ -35,6 +34,7 @@ class CartController extends GetxController {
       final json = jsonDecode(body);
       Data = json['data'];
       Comman.sucesstoast("Product Added Successfully");
+      getCartCount();
       //  final NavigationController navigationController = Get.find<NavigationController>();
       //                      navigationController.resetNavigation();
       //               Navigator.pushReplacementNamed(context, '/tabnavigation');
@@ -50,6 +50,7 @@ class CartController extends GetxController {
     var response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
+      getCartCount();
       final body = response.body;
       final json = jsonDecode(body);
       cartData = json['data'];
@@ -74,11 +75,12 @@ class CartController extends GetxController {
 
     try {
       var response = await http.get(Uri.parse(url));
-
+              
       if (response.statusCode == 200) {
-        Comman.errortoast("Product Removed");
+        getCartCount();
         // Handle success
         Get.back();
+        
       } else {
         Get.back();
         throw Exception('Failed to remove cart item: ${response.reasonPhrase}');
@@ -97,7 +99,7 @@ class CartController extends GetxController {
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        Comman.sucesstoast("Quantity Increased");
+      //  getCartCount();
         final body = response.body;
         final json = jsonDecode(body);
         List<dynamic> data = json['data'];
@@ -125,7 +127,7 @@ class CartController extends GetxController {
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        Comman.errortoast("Quantity Decreased");
+        // getCartCount();
         final body = response.body;
         final json = jsonDecode(body);
         List<dynamic> data = json['data'];
@@ -144,4 +146,27 @@ class CartController extends GetxController {
       throw Exception('Failed to subtract product quantity: $e');
     }
   }
+
+
+  // Define a method to fetch cart details and update the count
+  Future<void> getCartCount() async {
+    String url = "https://www.texasknife.com/dynamic/texasknifeapi.php?action=final_cart_details&store_id=1&customer_id=88985";
+    try {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final body = response.body;
+        final json = jsonDecode(body);
+        List<dynamic> data = json['data'];
+        // Set the count of items in the data array
+        cartItemCount.value = data.length;
+      } else {
+        // Handle the case where the response status is not 200
+        print('Failed to load cart details');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the request
+      print('Error fetching cart details: $error');
+    }
+  }
 }
+

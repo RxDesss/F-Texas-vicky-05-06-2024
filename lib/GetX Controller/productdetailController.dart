@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/Screens/productdetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class ProductDetailController extends GetxController {
   String imageName = '';
   String imageUrl = '';
   RxBool showButton=true.obs;
-
+final CartController cartController=Get.put(CartController());
   Future<void> getProductImage(String productBImage) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=image&image=$productBImage';
@@ -24,6 +25,7 @@ class ProductDetailController extends GetxController {
       imageUrl = data[0]['msg'];
        Get.back(); // Close the loader dialog
       Get.to(() => const ProductDetailScreen());
+    
     }
   }
 
@@ -38,6 +40,7 @@ class ProductDetailController extends GetxController {
       productDetailList = json["data"];
       String productBImage = productDetailList[0]['product_b_image'];
       await getProductImage(productBImage);
+      
     }
   }
 
@@ -51,6 +54,7 @@ if(res.statusCode==200){
   productDetailList=json["data"];
  String productBImage = productDetailList[0]['product_b_image'];
       getProductImage(productBImage);
+     
  
 }
 }

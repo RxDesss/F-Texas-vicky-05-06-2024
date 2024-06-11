@@ -67,16 +67,27 @@ class _SearchProductState extends State<SearchProduct> {
               margin:EdgeInsets.all(MediaQuery.of(context).size.height*0.015),
               padding:EdgeInsets.all(MediaQuery.of(context).size.height*0.015),
               decoration: BoxDecoration(
-               color: Colors.blueAccent[100],
-               borderRadius:BorderRadius.only(topRight:Radius.circular(60))
+              color: const Color(0xFFd2d5de),
+               borderRadius:BorderRadius.circular(10),
+                boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.1), // shadow color
+        spreadRadius: 5, // spread radius
+        blurRadius: 7, // blur radius
+        offset: Offset(0, 3), // changes position of shadow
+      ),
+    ],
               ),
               child: Column(
                 children: [
                 Row(
                   children: [
-                    Text('Sku: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                     Text(searchProductController.filteredProducts[index]['sku'],style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
+                    Text('Product Code: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: const Color(0xFFCC0001)),),
+                     Text(searchProductController.filteredProducts[index]['sku'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: const Color(0xFF292e7e)), )
                   ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                  SizedBox(
               
@@ -84,10 +95,10 @@ class _SearchProductState extends State<SearchProduct> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Description: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      Text('Description: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: const Color(0xFFCC0001)),),
                        SizedBox(
                         width:MediaQuery.of(context).size.width*0.55,
-                        child: Text(searchProductController.filteredProducts[index]['description'].replaceAll(RegExp(r'<[^>]*>|<\/[^>]*>'), '')))
+                        child: Text(searchProductController.filteredProducts[index]['description'].replaceAll(RegExp(r'<[^>]*>|<\/[^>]*>'), '',),style: TextStyle(color: const Color(0xFF767475),fontSize: 16),maxLines: 3, overflow: TextOverflow.ellipsis,))
                     ],
                                ),
                  ),

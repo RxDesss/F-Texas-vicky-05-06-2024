@@ -1,9 +1,10 @@
 import 'package:demo_project/GetX%20Controller/addressControlle.dart';
-import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../GetX Controller/cartController.dart';
 
 class CartScreeen extends StatefulWidget {
   const CartScreeen({super.key});
