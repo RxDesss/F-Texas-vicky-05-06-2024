@@ -14,5 +14,15 @@ class NavigationController extends GetxController {
   // History to keep track of the tab navigation
   final RxList<int> history = <int>[0].obs;
 
-  void clear() {}
+  void clear() {
+    selectedIndex.value = 0;
+    history.clear();
+    history.add(0);
+  }
+
+  void resetNavigation() {
+    selectedIndex.value = 0; // Set the home screen as the selected index
+    history.clear(); // Clear the history
+    history.add(0); // Add the home screen to the history
+  }
 }

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:demo_project/Common/commom.dart';
 import 'package:demo_project/GetX%20Controller/addressControlle.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
+import 'package:demo_project/GetX%20Controller/navigationcontroller.dart';
 import 'package:demo_project/Screens/checkoutScreen.dart';
 import 'package:demo_project/Screens/paymentScreen.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +130,9 @@ class ShippingController extends GetxController {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Comman.sucesstoast("Order Placed sucessfully ❤️");
+                    Comman.sucesstoast("Order Placed sucessfully ");
+                     final NavigationController navigationController = Get.find<NavigationController>();
+                           navigationController.resetNavigation();
                     Navigator.pushReplacementNamed(context, '/tabnavigation');
                   },
                   child: const Text('OK'),
