@@ -2,7 +2,6 @@
 
 import 'package:demo_project/GetX%20Controller/addressControlle.dart';
 import 'package:demo_project/Screens/shippingScreen.dart';
-import 'package:demo_project/Screens/cartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -123,7 +122,13 @@ class _addressScreenState extends State<addressScreen> {
     return PopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Address"),
+          title: const Text(
+            "Address",
+            style: TextStyle(
+                color: Color(0xFF292e7e),
+                fontSize: 23,
+                fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
         ),
         body: Form(
@@ -398,12 +403,13 @@ class _addressScreenState extends State<addressScreen> {
                                             _selectedValue = value!;
                                           });
                                         },
-                                        child: const Text('Same As Shipping',
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    117, 78, 13, 231)))),
+                                        child: const Text(
+                                          'Same As Shipping',
+                                          style: TextStyle(
+                                              color: Color(0xFF292e7e),
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                     const Divider(
                                       color: Colors.black,
                                       thickness: 1.0,
@@ -419,209 +425,213 @@ class _addressScreenState extends State<addressScreen> {
                                             _selectedValue = value!;
                                           });
                                         },
-                                        child: const Text('Use a Different',
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    117, 78, 13, 231)))),
+                                        child: const Text(
+                                          'Use a Different',
+                                          style: TextStyle(
+                                              color: Color(0xFF292e7e),
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                   ],
                                 ),
                                 Visibility(
                                   visible: _selectedValue == 2,
                                   child: Form(
                                     key: _formKey2,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Billing Address',
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold)),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                // key: _formKey2,
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: TextFormField(
-                                                  controller:
-                                                      _textControllers[0],
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Please enter FirstName';
-                                                    }
-                                                    return null;
-                                                  },
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: "FirstName",
+                                    child: Padding(
+                                       padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('Billing Address',
+                                              style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.bold)),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  // key: _formKey2,
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _textControllers[0],
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Please enter FirstName';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                      labelText: "FirstName",
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: TextFormField(
-                                                  controller:
-                                                      _textControllers[1],
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Please enter LastName';
-                                                    }
-                                                    return null;
-                                                  },
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText:
-                                                              "LastName"),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _textControllers[1],
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Please enter LastName';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            labelText:
+                                                                "LastName"),
+                                                  ),
                                                 ),
                                               ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: "Company(optional)"),
                                             ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: "Company(optional)"),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _textControllers[2],
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: "Address"),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please enter Address';
-                                              }
-                                              return null;
-                                            },
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              controller: _textControllers[2],
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: "Address"),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter Address';
+                                                }
+                                                return null;
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText:
-                                                    "Apartment,Suite,Etc(optional)"),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText:
+                                                      "Apartment,Suite,Etc(optional)"),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _textControllers[3],
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: "city"),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please enter city';
-                                              }
-                                              return null;
-                                            },
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              controller: _textControllers[3],
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: "city"),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter city';
+                                                }
+                                                return null;
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: TextFormField(
-                                                  controller:
-                                                      _textControllers[4],
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Please enter Country/Region ';
-                                                    }
-                                                    return null;
-                                                  },
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText:
-                                                              "Country/Region"),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _textControllers[4],
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Please enter Country/Region ';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            labelText:
+                                                                "Country/Region"),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: TextFormField(
-                                                  controller:
-                                                      _textControllers[5],
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText: "State"),
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Please enter State';
-                                                    }
-                                                    return null;
-                                                  },
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _textControllers[5],
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            labelText: "State"),
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Please enter State';
+                                                      }
+                                                      return null;
+                                                    },
+                                                  ),
                                                 ),
                                               ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              controller: _textControllers[6],
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: "ZipCode"),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter ZipCode';
+                                                }
+                                                return null;
+                                              },
                                             ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _textControllers[6],
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: "ZipCode"),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please enter ZipCode';
-                                              }
-                                              return null;
-                                            },
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _textControllers[7],
-                                            keyboardType: TextInputType.number,
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: "PhoneNumber"),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please enter PhoneNumber';
-                                              }
-                                              return null;
-                                            },
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: TextFormField(
+                                              controller: _textControllers[7],
+                                              keyboardType: TextInputType.number,
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: "PhoneNumber"),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter PhoneNumber';
+                                                }
+                                                return null;
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -639,7 +649,7 @@ class _addressScreenState extends State<addressScreen> {
                               margin:
                                   const EdgeInsets.only(left: 30, right: 30),
                               decoration: BoxDecoration(
-                                  color: const Color(0xFFCC0000),
+                                  color: const Color(0xFFCC0001),
                                   borderRadius: BorderRadius.circular(25)),
                               child: TextButton(
                                 onPressed: () {
@@ -664,12 +674,13 @@ class _addressScreenState extends State<addressScreen> {
                                   }
                                 },
                                 // onPressed: submitForm,
-                                child: const Text("Continue to Shipping",
-                                 style: TextStyle(
-                                            color:
-                                                Colors.white, // Set text color
-                                            fontSize: 16.0, // Set font size
-                                          ),),
+                                child: const Text(
+                                  "Continue to Shipping",
+                                  style: TextStyle(
+                                    color: Colors.white, // Set text color
+                                    fontSize: 16.0, // Set font size
+                                  ),
+                                ),
                               ),
                             ),
                             const SizedBox(

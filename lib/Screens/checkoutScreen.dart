@@ -23,7 +23,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Checkout",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
+        title: const Text("Checkout",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFF292e7e),),),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -33,8 +33,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               flex: 13,
               child: Content(context, cartController, shippingController, addressController),
             ),
-            Expanded(
-              flex: 1,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20), // Add padding to the bottom
               child: CheckoutButton(shippingController, context),
             ),
           ],
@@ -61,7 +61,7 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
     padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     decoration: BoxDecoration(
-     color: const Color.fromARGB(255, 158, 168, 224),
+     color:const Color.fromARGB(255, 249, 249, 252),
       borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
       boxShadow: [
         BoxShadow(
@@ -79,16 +79,16 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
           Container(
             padding: const EdgeInsets.all(5),
             margin: const EdgeInsets.only(bottom: 5, top: 5),
-            decoration: BoxDecoration(
-              color: Colors.blueGrey[50],
+            decoration:  BoxDecoration(
+              color:const Color(0xFFd2d5de),
               borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.01),
             ),
             child: Row(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.09,
+                  height: MediaQuery.of(context).size.height * 0.12,
                   width: MediaQuery.of(context).size.height * 0.09,
-                  color: const Color.fromARGB(255, 245, 209, 215),
+                  color:const Color.fromARGB(255, 251, 253, 249),
                   child: Image.network(
                     cartController.cartData[index]['product_image'],
                     fit: BoxFit.fill,
@@ -105,9 +105,10 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
                         height: MediaQuery.of(context).size.height * 0.05,
                         child: Text(
                           cartController.cartData[index]['product_name'],
-                          style: const TextStyle(
+                         style: const TextStyle(
                             overflow: TextOverflow.fade,
-                            fontSize: 12,
+                            fontSize: 14,
+                            color: Color(0xFF292e7e),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -115,13 +116,13 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
                       Text(
                         "${cartController.cartData[index]['quantity']} * ${cartController.cartData[index]['product_price']}",
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         "Total Price: \$${cartController.cartData[index]['total'].toString().substring(0, 3)}",
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 15, color: Color(0xFF292e7e),
                         ),
                       ),
                     ],
@@ -143,9 +144,9 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
             children: [
               const Text(
                 "Sub Total",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("\$ ${cartController.totalAmount1.toString().substring(0, 4)}"),
+              Text("\$ ${cartController.totalAmount1.toString().substring(0, 3)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -155,9 +156,9 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
             children: [
               const Text(
                 "Shipping Charge",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("${shippingController.shippingMethodTax}"),
+              Text("${shippingController.shippingMethodTax}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -167,9 +168,9 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
             children: [
               const Text(
                 "Estimated salesTax",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("\$ ${shippingController.EstimatedSalesTax.toString().substring(0, 5)}"),
+              Text("\$ ${shippingController.EstimatedSalesTax.toString().substring(0, 5)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -186,9 +187,9 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
             children: [
               const Text(
                 "Total",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("\$ ${shippingController.NetAmount.toString().substring(0, 5)}"),
+              Text("\$ ${shippingController.NetAmount.toString().substring(0, 5)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -206,20 +207,22 @@ Widget AddressMethodPayWithSection(BuildContext context, CartController cartCont
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Contact"),
-            Text(addressController.AddressDatas[0]['bill_email1']),
+            const Text("Contact",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            Text(addressController.AddressDatas[0]['bill_email1'],style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
           ],
         ),
         const DividerWidget(),
-        RepeatAddress(context, addressController, "Shipping To"),
+        RepeatAddress(context, addressController, "Shipping To",),
         const DividerWidget(),
         RepeatAddress(context, addressController, "Billing To"),
         const DividerWidget(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Pay With"),
-            Text('${shippingController.PayWith}'),
+            const Text("Pay With",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            Text('${shippingController.PayWith}',style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
           ],
         ),
       ],
@@ -232,21 +235,21 @@ Widget RepeatAddress(BuildContext context, AddressController addressController, 
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(heading),
+      Text(heading,style:const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
       Container(
         width: MediaQuery.of(context).size.width * 0.5,
         alignment: Alignment.centerRight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text("${addressController.AddressDatas[0]['bill_name']}"),
-            Text("${addressController.AddressDatas[0]['bill_l_name']}"),
-            Text("${addressController.AddressDatas[0]['bill_address1']}"),
-            Text("${addressController.AddressDatas[0]['bill_address2']}"),
-            Text("${addressController.AddressDatas[0]['bill_town_city']}"),
-            Text("${addressController.AddressDatas[0]['bill_state_region1']}"),
-            Text("${addressController.AddressDatas[0]['bill_country']}"),
-            Text("${addressController.AddressDatas[0]['bill_zip_code']}"),
+            Text("${addressController.AddressDatas[0]['bill_name']}",style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_l_name']}",style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_address1']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_address2']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_town_city']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_state_region1']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_country']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+            Text("${addressController.AddressDatas[0]['bill_zip_code']}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
           ],
         ),
       ),
@@ -272,6 +275,7 @@ class DividerWidget extends StatelessWidget {
 Widget CheckoutButton(ShippingController shippingController, BuildContext context) {
   return Container(
     width: double.infinity,
+    height: 50,
     margin: const EdgeInsets.symmetric(horizontal: 30),
     decoration: BoxDecoration(
       color:const Color(0xFFCC0000),
@@ -281,7 +285,7 @@ Widget CheckoutButton(ShippingController shippingController, BuildContext contex
       onPressed: () {
         shippingController.fetchPlaceOrder(context);
       },
-      child: const Text("Place Order",style: TextStyle(color: Colors.white),),
+      child: const Text("Place Order",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
     ),
   );
 }

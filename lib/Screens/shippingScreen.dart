@@ -15,7 +15,13 @@ class ShippingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shipping",style: TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),
+        title: const Text(
+          "Shipping",
+          style: TextStyle(
+              color: Color(0xFF292e7e),
+              fontSize: 23,
+              fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -32,13 +38,16 @@ class ShippingScreen extends StatelessWidget {
                     children: [
                       Obx(() {
                         if (cartController.isLoadingCartAPI.value) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
-                        return orderItemsSection(context, cartController, shippingController);
+                        return orderItemsSection(
+                            context, cartController, shippingController);
                       }),
                       Obx(() {
                         if (shippingController.isLoadingShippingAPI.value) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                         return taxItemSection(context, shippingController);
                       }),
@@ -50,15 +59,32 @@ class ShippingScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Obx(() {
-                bool isShippingMethodSelected = shippingController.shippingMethodTaxName.isNotEmpty;
-                return ElevatedButton(
-                  onPressed: isShippingMethodSelected ? () {
-                    shippingController.fetchContinueToPayment();
-                  } : null,
-                  style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white, backgroundColor: isShippingMethodSelected ?  const Color(0xFFCC0000) : Colors.grey, disabledForegroundColor: Colors.grey.withOpacity(0.38), disabledBackgroundColor: Colors.grey.withOpacity(0.12), // Disabled color
-      ),
-                  child: Text(isShippingMethodSelected ? "Payment" : "Select Shipping Method"),
+                bool isShippingMethodSelected =
+                    shippingController.shippingMethodTaxName.isNotEmpty;
+                return SizedBox(
+                   height: 50.0, 
+                  child: ElevatedButton(
+                    onPressed: isShippingMethodSelected
+                        ? () {
+                            shippingController.fetchContinueToPayment();
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: isShippingMethodSelected
+                          ? const Color(0xFFCC0001)
+                          : Colors.grey,
+                      disabledForegroundColor: Colors.grey.withOpacity(0.38),
+                      disabledBackgroundColor:
+                          Colors.grey.withOpacity(0.12), // Disabled color
+                    ),
+                    child: Text(
+                      isShippingMethodSelected
+                          ? "Payment"
+                          : "Select Shipping Method",
+                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 );
               }),
             ),
@@ -69,13 +95,15 @@ class ShippingScreen extends StatelessWidget {
   }
 }
 
-Widget orderItemsSection(BuildContext context, CartController cartController, ShippingController shippingController) {
+Widget orderItemsSection(BuildContext context, CartController cartController,
+    ShippingController shippingController) {
   return Container(
     padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
     decoration: BoxDecoration(
-       color: const Color.fromARGB(255, 158, 168, 224),
-      borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
+      color: const Color.fromARGB(255, 251, 251, 253),
+      borderRadius:
+          BorderRadius.circular(MediaQuery.of(context).size.height * 0.03),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.15),
@@ -92,15 +120,16 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
             padding: const EdgeInsets.all(5),
             margin: const EdgeInsets.symmetric(vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.blueGrey[50],
-              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.01),
+              color: const Color(0xFFd2d5de),
+              borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.height * 0.01),
             ),
             child: Row(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.09,
+                  height: MediaQuery.of(context).size.height * 0.12,
                   width: MediaQuery.of(context).size.height * 0.09,
-                  color: const Color.fromARGB(255, 245, 209, 215),
+                  color: const Color.fromARGB(255, 251, 253, 249),
                   child: Image.network(
                     cartController.cartData[index]['product_image'],
                     fit: BoxFit.fill,
@@ -113,23 +142,25 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.65,
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        height: MediaQuery.of(context).size.height * 0.06,
                         child: Text(
                           cartController.cartData[index]['product_name'],
                           style: const TextStyle(
                             overflow: TextOverflow.fade,
-                            fontSize: 12,
+                            fontSize: 14,
+                            color: Color(0xFF292e7e),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       Text(
                         "${cartController.cartData[index]['quantity']} * ${cartController.cartData[index]['product_price']}",
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 15),
                       ),
                       Text(
                         "Total Price: \$${cartController.cartData[index]['total'].toString().length >= 5 ? cartController.cartData[index]['total'].toString().substring(0, 5) : cartController.cartData[index]['total'].toString()}",
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(
+                            fontSize: 15, color: Color(0xFF292e7e)),
                       ),
                     ],
                   ),
@@ -145,26 +176,38 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
           endIndent: MediaQuery.of(context).size.height * 0.01,
         ),
         Obx(() => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Sub Total", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("\$${cartController.totalAmount1.toString().length >= 5 ? cartController.totalAmount1.toString().substring(0, 5) : cartController.totalAmount1.toString()}")
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Sub Total",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  "\$${cartController.totalAmount1.toString().length >= 5 ? cartController.totalAmount1.toString().substring(0, 5) : cartController.totalAmount1.toString()}",
+                  style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)),
+                )
+              ],
+            )),
         Obx(() => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Shipping Charge", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("${shippingController.shippingMethodTax}")
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Shipping Charge",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text("${shippingController.shippingMethodTax}",
+                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+              ],
+            )),
         Obx(() => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Estimated salesTax", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 5) : shippingController.EstimatedSalesTax.toString()}")
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Estimated salesTax",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                    "\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 5) : shippingController.EstimatedSalesTax.toString()}",
+                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+              ],
+            )),
         Divider(
           color: Colors.black,
           height: MediaQuery.of(context).size.height * 0.03,
@@ -173,41 +216,53 @@ Widget orderItemsSection(BuildContext context, CartController cartController, Sh
           endIndent: MediaQuery.of(context).size.height * 0.01,
         ),
         Obx(() => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Total", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("\$${shippingController.NetAmount.toString().length >= 5 ? shippingController.NetAmount.toString().substring(0, 5) : shippingController.NetAmount.toString()}")
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Total",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                    "\$${shippingController.NetAmount.toString().length >= 5 ? shippingController.NetAmount.toString().substring(0, 5) : shippingController.NetAmount.toString()}",
+                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+              ],
+            )),
       ],
     ),
   );
 }
 
-Widget taxItemSection(BuildContext context, ShippingController shippingController) {
+Widget taxItemSection(
+    BuildContext context, ShippingController shippingController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text("Shipping Method", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color:  Color(0xff2a2e7e))),
+        child: Text("Shipping Method",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff2a2e7e))),
       ),
       Container(
         height: MediaQuery.of(context).size.height * 0.4,
         width: double.infinity,
         padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
-    margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
-        decoration:const BoxDecoration(
-        color:  Color.fromARGB(255, 158, 168, 224),
-        borderRadius: BorderRadius.all(Radius.circular(20))
-        ),
-         
+        margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+        decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 249, 250, 248),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Obx(
           () => shippingController.shippingMethodsData.isNotEmpty
               ? ListView.builder(
-                  itemCount: shippingController.shippingMethodsData[0]['shipping'].split(',').length,
+                  itemCount: shippingController.shippingMethodsData[0]
+                          ['shipping']
+                      .split(',')
+                      .length,
                   itemBuilder: (BuildContext context, int index) {
-                    final String option = shippingController.shippingMethodsData[0]['shipping'].split(',')[index];
+                    final String option = shippingController
+                        .shippingMethodsData[0]['shipping']
+                        .split(',')[index];
                     final String optionName = option.split('||')[0];
                     final String optionValue = option.split('||')[1];
 
@@ -217,7 +272,9 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("United Parcel Service", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                            child: Text("United Parcel Service",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,
@@ -231,7 +288,9 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("United State Postal Service", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                            child: Text("United State Postal Service",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,
@@ -245,7 +304,9 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
                         children: [
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("Store PickUp", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                            child: Text("Store PickUp",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold)),
                           ),
                           ShippingOptionTile(
                             optionName: optionName,
@@ -290,7 +351,11 @@ class _ShippingOptionTileState extends State<ShippingOptionTile> {
   Widget build(BuildContext context) {
     return Obx(() {
       return RadioListTile(
-        title: Text(widget.optionName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        title: Text(widget.optionName,
+            style: const TextStyle(
+              fontSize: 18,
+              color: Color(0xFF292e7e),
+            )),
         value: widget.optionName,
         groupValue: shippingController.shippingMethodTaxName.value,
         onChanged: (String? value) {
@@ -300,7 +365,11 @@ class _ShippingOptionTileState extends State<ShippingOptionTile> {
             shippingController.getEstimatedSalesTax();
           }
         },
-        secondary: Text(widget.optionValue),
+        secondary: Text(widget.optionValue,
+            style: const TextStyle(
+              fontSize: 18,
+              color: Color(0xFF292e7e),
+            )),
       );
     });
   }
