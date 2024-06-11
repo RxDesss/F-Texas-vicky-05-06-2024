@@ -50,7 +50,6 @@ class TabNavigation extends StatelessWidget {
           () => BottomNavigationBar(
             currentIndex: navigationController.selectedIndex.value,
             onTap: (index) {
-              // Only add to history if it's not the current tab
               if (navigationController.selectedIndex.value != index) {
                 navigationController.history.add(index);
                 navigationController.selectedIndex.value = index;
