@@ -29,6 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white, // Global background color
+      ),
       initialRoute: '/loginscreen',
       routes: {
         '/loginscreen':(context)=>const LoginScreen(),
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/myorders':(context)=>const MyOrders(),
         '/productdetail':(context)=>const ProductDetailScreen(),
         '/searchproduct':(context)=>const SearchProduct(),
-        '/qrscanpage':(context)=>QRScanPage(),
+        '/qrscanpage':(context)=>const QRScanPage(),
         '/nocategory':(context)=>const NoCategoryPage(),
         '/subcategory':(context)=>const SubCategoryScreen(),
         '/subsubcategory':(context)=>const SubSubCategoryPage(),

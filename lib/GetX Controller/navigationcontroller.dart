@@ -1,6 +1,7 @@
 import 'package:demo_project/Screens/cartScreen.dart';
 import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:demo_project/Screens/profileScreen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NavigationController extends GetxController {
@@ -23,6 +24,14 @@ class NavigationController extends GetxController {
   void resetNavigation() {
     selectedIndex.value = 0; // Set the home screen as the selected index
     history.clear(); // Clear the history
-    history.add(0); // Add the home screen to the history
+    history.add(0);
+     // Add the home screen to the history
   }
+
+
+  void resetNavigation1(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, '/tabnavigation', (Route<dynamic> route) => false);
+  
+}
+
 }

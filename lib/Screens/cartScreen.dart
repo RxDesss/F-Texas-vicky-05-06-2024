@@ -63,7 +63,9 @@ class _CartScreeenState extends State<CartScreeen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text("My Cart", style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e))),
         centerTitle: true,
       ),
@@ -183,7 +185,7 @@ class _CartScreeenState extends State<CartScreeen> {
                                                 item['product_name'],
                                                 style: const TextStyle(
                                                   overflow: TextOverflow.fade,
-                                                  fontSize: 14,
+                                                  fontSize: 15,
                                                   fontWeight: FontWeight.bold,
                                                    color: Color(0xff2a2e7e)
                                                 ),

@@ -44,7 +44,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
       appBar: AppBar(
+              backgroundColor: Colors.white,
         title: const Text(
           'Product Detail',
           style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e)),

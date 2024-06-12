@@ -13,8 +13,24 @@ class ShippingScreen extends StatelessWidget {
     final CartController cartController = Get.find();
     final ShippingController shippingController = Get.find();
 
+    // Select the first shipping method by default and run the onchange function
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (shippingController.shippingMethodsData.isNotEmpty &&
+          shippingController.shippingMethodTaxName.isEmpty) {
+        final String firstOption =
+            shippingController.shippingMethodsData[0]['shipping'].split(',')[0];
+        final String firstOptionName = firstOption.split('||')[0];
+        final String firstOptionValue = firstOption.split('||')[1];
+        shippingController.shippingMethodTax.value = firstOptionValue;
+        shippingController.shippingMethodTaxName.value = firstOptionName;
+        shippingController.getEstimatedSalesTax();
+      }
+    });
+
     return Scaffold(
+            backgroundColor: Colors.white,
       appBar: AppBar(
+              backgroundColor: Colors.white,
         title: const Text(
           "Shipping",
           style: TextStyle(
@@ -62,7 +78,7 @@ class ShippingScreen extends StatelessWidget {
                 bool isShippingMethodSelected =
                     shippingController.shippingMethodTaxName.isNotEmpty;
                 return SizedBox(
-                   height: 50.0, 
+                  height: MediaQuery.of(context).size.height * 0.06,
                   child: ElevatedButton(
                     onPressed: isShippingMethodSelected
                         ? () {
@@ -82,7 +98,8 @@ class ShippingScreen extends StatelessWidget {
                       isShippingMethodSelected
                           ? "Payment"
                           : "Select Shipping Method",
-                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 );
@@ -193,8 +210,11 @@ Widget orderItemsSection(BuildContext context, CartController cartController,
                 const Text("Shipping Charge",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text("${shippingController.shippingMethodTax}",
-                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+                Text(shippingController.shippingMethodTax.isNotEmpty
+                    ? "${shippingController.shippingMethodTax}"
+                    : "-", // Display "-" if there is no value
+                    style: const TextStyle(
+                        fontSize: 16, color: Color(0xFF292e7e)))
               ],
             )),
         Obx(() => Row(
@@ -203,9 +223,11 @@ Widget orderItemsSection(BuildContext context, CartController cartController,
                 const Text("Estimated salesTax",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(
-                    "\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 5) : shippingController.EstimatedSalesTax.toString()}",
-                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+                Text(shippingController.EstimatedSalesTax.toString().isNotEmpty
+                    ? "\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 5) : shippingController.EstimatedSalesTax.toString()}"
+                    : "-", // Display "-" if there is no value
+                    style: const TextStyle(
+                        fontSize: 16, color: Color(0xFF292e7e)))
               ],
             )),
         Divider(
@@ -221,9 +243,11 @@ Widget orderItemsSection(BuildContext context, CartController cartController,
                 const Text("Total",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(
-                    "\$${shippingController.NetAmount.toString().length >= 5 ? shippingController.NetAmount.toString().substring(0, 5) : shippingController.NetAmount.toString()}",
-                    style: const TextStyle(fontSize: 16, color: Color(0xFF292e7e)))
+                Text(shippingController.NetAmount.toString().isNotEmpty
+                    ? "\$${shippingController.NetAmount.toString().length >= 5 ? shippingController.NetAmount.toString().substring(0, 5) : shippingController.NetAmount.toString()}"
+                    : "-", // Display "-" if there is no value
+                    style: const TextStyle(
+                        fontSize: 16, color: Color(0xFF292e7e)))
               ],
             )),
       ],
@@ -231,13 +255,13 @@ Widget orderItemsSection(BuildContext context, CartController cartController,
   );
 }
 
-Widget taxItemSection(
-    BuildContext context, ShippingController shippingController) {
+Widget taxItemSection(BuildContext context, ShippingController shippingController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Padding(
-        padding: EdgeInsets.all(8.0),
+      Container(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+        margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
         child: Text("Shipping Method",
             style: TextStyle(
                 fontSize: 20,
@@ -340,7 +364,6 @@ class ShippingOptionTile extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _ShippingOptionTileState createState() => _ShippingOptionTileState();
 }
 

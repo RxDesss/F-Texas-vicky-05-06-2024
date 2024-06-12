@@ -19,7 +19,9 @@ final data=Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
       appBar: AppBar(
+              backgroundColor: Colors.white,
  title: Text(data.toString(),style: const TextStyle(fontWeight: FontWeight.bold,color:Color(0xff2a2e7e)),),        centerTitle: true,
       ),
       body: SafeArea(
