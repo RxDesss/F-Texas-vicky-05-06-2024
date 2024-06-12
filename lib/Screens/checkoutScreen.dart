@@ -22,7 +22,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
       appBar: AppBar(
+              backgroundColor: Colors.white,
         title: const Text("Checkout",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFF292e7e),),),
         centerTitle: true,
       ),
@@ -275,7 +277,7 @@ class DividerWidget extends StatelessWidget {
 Widget CheckoutButton(ShippingController shippingController, BuildContext context) {
   return Container(
     width: double.infinity,
-    height: 50,
+    height:MediaQuery.of(context).size.height * 0.06,
     margin: const EdgeInsets.symmetric(horizontal: 30),
     decoration: BoxDecoration(
       color:const Color(0xFFCC0000),

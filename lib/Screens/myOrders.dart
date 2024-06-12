@@ -25,7 +25,9 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
       appBar: AppBar(
+              backgroundColor: Colors.white,
         title: const Text(
           "My Order",
           style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e)),

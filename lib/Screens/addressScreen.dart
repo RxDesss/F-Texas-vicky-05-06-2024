@@ -121,7 +121,9 @@ class _addressScreenState extends State<addressScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       child: Scaffold(
+              backgroundColor: Colors.white,
         appBar: AppBar(
+                backgroundColor: Colors.white,
           title: const Text(
             "Address",
             style: TextStyle(
@@ -407,7 +409,7 @@ class _addressScreenState extends State<addressScreen> {
                                           'Same As Shipping',
                                           style: TextStyle(
                                               color: Color(0xFF292e7e),
-                                              fontSize: 23,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.bold),
                                         )),
                                     const Divider(
@@ -429,7 +431,7 @@ class _addressScreenState extends State<addressScreen> {
                                           'Use a Different',
                                           style: TextStyle(
                                               color: Color(0xFF292e7e),
-                                              fontSize: 23,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.bold),
                                         )),
                                   ],

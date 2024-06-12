@@ -53,7 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
       appBar: AppBar(
+          backgroundColor: Colors.white,
         title: const Text("Profile", style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff2a2e7e))),
         actions: [
           IconButton(
