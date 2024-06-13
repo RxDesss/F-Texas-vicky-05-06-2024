@@ -1,7 +1,10 @@
+import 'package:demo_project/GetX%20Controller/cartController.dart';
+import 'package:demo_project/GetX%20Controller/paymentController.dart';
 import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -12,6 +15,8 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   final ShippingController shippingController = Get.put(ShippingController());
+  final CartController cartController = Get.put(CartController());
+  final PaymentCotroller paymentCotroller=Get.put(PaymentCotroller());
 
   bool showCardFields = false;
   bool showMoneyOrderField = false;
@@ -96,6 +101,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       updateCheckboxState();
                     });
                   },
+                  cartController: cartController,
+                  shippingController:shippingController,
+                  paymentCotroller:paymentCotroller,
+                  
                 ),
               ),
               SizedBox(
@@ -172,6 +181,9 @@ class PaymentContainer extends StatelessWidget {
   final ValueChanged<bool?>? onCardCheckboxChanged;
   final ValueChanged<bool?>? onMoneyOrderCheckboxChanged;
   final ValueChanged<bool?>? onCheckNumberCheckboxChanged;
+  final CartController cartController;
+  final ShippingController shippingController;
+  final PaymentCotroller paymentCotroller;
 
   const PaymentContainer({
     super.key,
@@ -186,6 +198,9 @@ class PaymentContainer extends StatelessWidget {
     required this.onCardCheckboxChanged,
     required this.onMoneyOrderCheckboxChanged,
     required this.onCheckNumberCheckboxChanged,
+    required this.cartController,
+    required this.shippingController,
+    required this.paymentCotroller,
   });
 
   @override
@@ -213,8 +228,7 @@ class PaymentContainer extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(
-                      16),
+                  LengthLimitingTextInputFormatter(16),
                 ],
                 decoration: const InputDecoration(
                   labelText: 'Card Number',
@@ -232,8 +246,6 @@ class PaymentContainer extends StatelessWidget {
               ),
               TextFormField(
                 controller: ccvController,
-                // labelText: 'CCV',
-                // validationMessage: 'Please enter CCV',
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -266,7 +278,7 @@ class PaymentContainer extends StatelessWidget {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'PPlease enter End Date';
+                    return 'Please enter End Date';
                   }
                   return null;
                 },
@@ -329,10 +341,62 @@ class PaymentContainer extends StatelessWidget {
               ),
             ],
           ),
+        paypalButton(context, cartController,shippingController,paymentCotroller),
       ],
     );
   }
 }
+
+Widget paypalButton(BuildContext context, CartController cartController, ShippingController shippingController,paymentCotroller ) {
+  return TextButton(
+    onPressed: () {
+      Get.to(UsePaypal(
+        sandboxMode: true,
+        clientId: "AY3yVdV6nydXDqIigklXFR9go5Hq8YoczITLIpnBtYPXiRv5KUoAzuGUIEjhRJVlxgU4Z3wrhzLcu14m",
+        secretKey: "EJksZ0Z6GERBfvesI9agBVCqH1TZ2RskyvRT3AuuyaAhb45B4Kr0hqxrGNQloUJ-FbROljK5d-4-wvny",
+        returnURL: "https://samplesite.com/return",
+        cancelURL: "https://samplesite.com/cancel",
+        transactions: [
+          {
+            "amount":  {
+              "total": shippingController.NetAmount.toString().substring(0, 4),
+              "currency": "USD",
+              "details": {
+                "subtotal": shippingController.NetAmount.toString().substring(0, 4),
+                "shipping": '0',
+                "shipping_discount": 0
+              }
+            },
+            "description": "The payment transaction description.",
+            "item_list": {
+              "items": [
+                {
+                  "name": "You will buy ${cartController.cartItemCount.value} products",
+                  "quantity": 1,
+                  "price": shippingController.NetAmount.toString().substring(0, 4),
+                  "currency": "USD"
+                }
+              ],
+            }
+          }
+        ],
+        note: "Contact us for any questions on your order.",
+        onSuccess: (Map params) async {
+          // print("onSuccess: $params");
+   paymentCotroller.navigation(context);
+        },
+        onError: (error) {
+          // print("onError: $error");
+        },
+        onCancel: (params) {
+          // print('cancelled: $params');
+        },
+      ));
+    },
+    child: const Text("Pay with Paypal"),
+  );
+}
+
 
 class _DateInputFormatter extends TextInputFormatter {
   @override
@@ -346,9 +410,7 @@ class _DateInputFormatter extends TextInputFormatter {
   }
 
   String _formatInput(String input) {
-    // Add formatting logic here, for example, format as MM/YYYY
-    final strippedInput =
-        input.replaceAll(RegExp(r'\D'), ''); // Remove non-digits
+    final strippedInput = input.replaceAll(RegExp(r'\D'), '');
     final buffer = StringBuffer();
     for (int i = 0; i < strippedInput.length; i++) {
       if (i == 2) {
@@ -370,13 +432,6 @@ class PaymentFieldContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-      // decoration: const BoxDecoration(
-      //  color: Color.fromARGB(255, 240, 240, 243),
-      //   borderRadius: BorderRadius.all(
-      //      Radius.circular(30.0),
-
-      //   ),
-      // ),
       child: Column(children: children),
     );
   }

@@ -81,14 +81,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ? FileImage(_selectedImage!)
                         : const NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png") as ImageProvider,
                   ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: IconButton(
-                      onPressed: _pickedImage,
-                      icon: const Icon(Icons.add_a_photo, color: Color(0xff2a2e7e)),
-                    ),
-                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   bottom: 0,
+                  //   child: IconButton(
+                  //     onPressed: _pickedImage,
+                  //     icon: const Icon(Icons.add_a_photo, color: Color(0xff2a2e7e)),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

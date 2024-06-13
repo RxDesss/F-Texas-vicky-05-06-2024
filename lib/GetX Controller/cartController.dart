@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:demo_project/Common/commom.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
+import 'package:demo_project/GetX%20Controller/navigationcontroller.dart';
+import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -35,9 +37,17 @@ class CartController extends GetxController {
       Data = json['data'];
       Comman.sucesstoast("Product Added Successfully");
       getCartCount();
-      //  final NavigationController navigationController = Get.find<NavigationController>();
-      //                      navigationController.resetNavigation();
-      //               Navigator.pushReplacementNamed(context, '/tabnavigation');
+ 
+                    final NavigationController navigationController =
+                        Get.find<NavigationController>();
+                    navigationController.resetNavigation();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const TabNavigation()), // Replace HomePage with your home screen widget
+                      (Route<dynamic> route) => false,
+                    );
      
     }
   }

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:demo_project/Screens/checkoutScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demo_project/GetX%20Controller/cartController.dart';
@@ -82,7 +83,8 @@ class ShippingScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: isShippingMethodSelected
                         ? () {
-                            shippingController.fetchContinueToPayment();
+                            // shippingController.fetchContinueToPayment();
+                             Get.to(() => const CheckoutScreen());
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
@@ -96,7 +98,7 @@ class ShippingScreen extends StatelessWidget {
                     ),
                     child: Text(
                       isShippingMethodSelected
-                          ? "Payment"
+                          ? "Continue to checkout"
                           : "Select Shipping Method",
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
@@ -224,7 +226,7 @@ Widget orderItemsSection(BuildContext context, CartController cartController,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 Text(shippingController.EstimatedSalesTax.toString().isNotEmpty
-                    ? "\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 5) : shippingController.EstimatedSalesTax.toString()}"
+                    ? "\$${shippingController.EstimatedSalesTax.toString().length >= 5 ? shippingController.EstimatedSalesTax.toString().substring(0, 4) : shippingController.EstimatedSalesTax.toString()}"
                     : "-", // Display "-" if there is no value
                     style: const TextStyle(
                         fontSize: 16, color: Color(0xFF292e7e)))
@@ -262,7 +264,7 @@ Widget taxItemSection(BuildContext context, ShippingController shippingControlle
       Container(
         padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
         margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
-        child: Text("Shipping Method",
+        child: const Text("Shipping Method",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

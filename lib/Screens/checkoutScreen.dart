@@ -6,6 +6,7 @@ import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -15,8 +16,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+    final ShippingController shippingController = Get.put(ShippingController());
   final CartController cartController = Get.put(CartController());
-  final ShippingController shippingController = Get.put(ShippingController());
   final AddressController addressController = Get.put(AddressController());
 
   @override
@@ -37,7 +38,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20), // Add padding to the bottom
-              child: CheckoutButton(shippingController, context),
+              child: CheckoutButton(cartController,shippingController, context),
             ),
           ],
         ),
@@ -172,7 +173,7 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
                 "Estimated salesTax",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("\$ ${shippingController.EstimatedSalesTax.toString().substring(0, 5)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+              Text("\$ ${shippingController.EstimatedSalesTax.toString().substring(0, 4)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -191,7 +192,7 @@ Widget OrderItemsSection(BuildContext context, CartController cartController, Sh
                 "Total",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text("\$ ${shippingController.NetAmount.toString().substring(0, 5)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+              Text("\$ ${shippingController.NetAmount.toString().substring(0, 4)}",style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
             ],
           ),
         ),
@@ -219,14 +220,14 @@ Widget AddressMethodPayWithSection(BuildContext context, CartController cartCont
         const DividerWidget(),
         RepeatAddress(context, addressController, "Billing To"),
         const DividerWidget(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Pay With",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            Text('${shippingController.PayWith}',style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     const Text("Pay With",
+        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        //     Text('${shippingController.PayWith}',style:const TextStyle(fontSize: 16, color: Color(0xFF292e7e))),
+        //   ],
+        // ),
       ],
     ),
   );
@@ -274,20 +275,70 @@ class DividerWidget extends StatelessWidget {
   }
 }
 
-Widget CheckoutButton(ShippingController shippingController, BuildContext context) {
+Widget CheckoutButton(CartController cartController,ShippingController shippingController, BuildContext context) {
   return Container(
     width: double.infinity,
-    height:MediaQuery.of(context).size.height * 0.06,
+    height: MediaQuery.of(context).size.height * 0.06,
     margin: const EdgeInsets.symmetric(horizontal: 30),
     decoration: BoxDecoration(
-      color:const Color(0xFFCC0000),
+      color: const Color(0xFFCC0000),
       borderRadius: BorderRadius.circular(25),
     ),
-    child: TextButton(
+    child: TextButton.icon(
       onPressed: () {
-        shippingController.fetchPlaceOrder(context);
+        // shippingController.fetchPlaceOrder(context);
+         Get.to(UsePaypal(
+        sandboxMode: true,
+        clientId: "AY3yVdV6nydXDqIigklXFR9go5Hq8YoczITLIpnBtYPXiRv5KUoAzuGUIEjhRJVlxgU4Z3wrhzLcu14m",
+        secretKey: "EJksZ0Z6GERBfvesI9agBVCqH1TZ2RskyvRT3AuuyaAhb45B4Kr0hqxrGNQloUJ-FbROljK5d-4-wvny",
+        returnURL: "https://samplesite.com/return",
+        cancelURL: "https://samplesite.com/cancel",
+        transactions: [
+          {
+            "amount":  {
+              "total": shippingController.NetAmount.toString().substring(0, 4),
+              "currency": "USD",
+              "details": {
+                "subtotal": shippingController.NetAmount.toString().substring(0, 4),
+                "shipping": '0',
+                "shipping_discount": 0
+              }
+            },
+            "description": "The payment transaction description.",
+            "item_list": {
+              "items": [
+                {
+                  "name": "You will buy ${cartController.cartItemCount.value} products",
+                  "quantity": 1,
+                  "price": shippingController.NetAmount.toString().substring(0, 4),
+                  "currency": "USD"
+                }
+              ],
+            }
+          }
+        ],
+        note: "Contact us for any questions on your order.",
+        onSuccess: (Map params) async {
+          // print("onSuccess: $params");
+                  shippingController.fetchPlaceOrder(context);
+        },
+        onError: (error) {
+          // print("onError: $error");
+        },
+        onCancel: (params) {
+          // print('cancelled: $params');
+        },
+      ));
       },
-      child: const Text("Place Order",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+      icon: const Icon(
+        Icons.paypal,  // You can change the icon here
+        color: Color.fromARGB(255, 107, 188, 235),
+      ),
+      label: const Text(
+        "Pay",
+        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+      ),
     ),
   );
 }
+

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -80,35 +81,41 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getData();
-    homeController.fetchData(context); // Ensure you call the method to fetch category products
+    // homeController.fetchData(context); // Ensure you call the method to fetch category products
+    Get.delete<CartController>();
   }
 
- @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: SafeArea(
-      child: Obx(() {
-        if (homeController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (homeController.isScanning.value) { // Show scanning loader if scanning
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                header(context, userName),
-                search(context),
-                Obx(() => featureProducts(context, homeController.featureProductList, getProductDetail)),
-                Obx(() => categoryProduct(context, homeController.categoryProductList)),
-              ],
-            ),
-          );
-        }
-      }),
-    ),
-  );
-}
-
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        // Exit the app when the back button is pressed
+        return true; // Returning true will exit the app
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Obx(() {
+            if (homeController.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (homeController.isScanning.value) { // Show scanning loader if scanning
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    header(context, userName),
+                    search(context),
+                    Obx(() => featureProducts(context, homeController.featureProductList, getProductDetail)),
+                    Obx(() => categoryProduct(context, homeController.categoryProductList)),
+                  ],
+                ),
+              );
+            }
+          }),
+        ),
+      ),
+    );
+  }
 
   Widget header(BuildContext context, String? userName) {
     return Padding(
@@ -200,7 +207,6 @@ Widget search(BuildContext context) {
     ),
   );
 }
-
 
 Widget featureProducts(BuildContext context, List<dynamic> featureProducts, Function getProductDetail) {
   return Column(
@@ -375,13 +381,11 @@ Future<void> scanBarcodeNormal() async {
     homeController.isScanning.value = false; // Set scanning to false
 
     if (barcodeScanRes != '-1') {
-        productDetailController.showButton.value=true; // Check if not cancelled
+      productDetailController.showButton.value = true; // Check if not cancelled
       productDetailController.getProductDetail(barcodeScanRes);
-    
     }
   } on PlatformException {
     barcodeScanRes = "Failed to get platform version";
     homeController.isScanning.value = false; // Set scanning to false in case of error
   }
 }
-
