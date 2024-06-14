@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:demo_project/GetX%20Controller/homeController.dart';
+import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -50,6 +51,7 @@ class LoginController extends GetxController {
       userEmail=loginList[0]['email'];
       Get.back();
       // ignore: use_build_context_synchronously
+       homeController.fetchData(context);
       Navigator.pushReplacementNamed(context, '/tabnavigation');
       
     } else {

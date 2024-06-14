@@ -32,9 +32,11 @@ final CartController cartController=Get.put(CartController());
   Future<void> getProductDetail(sku) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=product&sku=$sku';
+        // print("product detail url : ${url}");
     Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
+      // print("product detail statues code: ${res.statusCode}");
       final body = res.body;
       final json = jsonDecode(body);
       productDetailList = json["data"];
