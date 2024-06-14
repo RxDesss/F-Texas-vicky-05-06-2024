@@ -150,8 +150,9 @@ class ShippingController extends GetxController {
                               const TabNavigation()), // Replace HomePage with your home screen widget
                       (Route<dynamic> route) => false,
                     );
-                    clearAllGetXDataAndCache();
+                    // clearAllGetXDataAndCache(context);
                     isLoadingShippingAPI.value = true;
+                    homeContoller.fetchData(context);
                   },
                   child: const Text('OK'),
                 ),
@@ -166,12 +167,13 @@ class ShippingController extends GetxController {
     }
   }
 
-  void clearAllGetXDataAndCache() {
+  void clearAllGetXDataAndCache(context) {
     // Clear all GetX controllers
     Get.delete<ProductDetailController>();
     Get.delete<SearchProductController>();
     Get.delete<AddressController>();
     Get.delete<CartController>();
+    Get.deleteAll();
   }
 
   Future<void> fetchOrderTax() async {

@@ -45,6 +45,10 @@ flutter_native_splash:
   ios_content_mode: scaleAspectFill
   android_disable_fullscreen: true
   web: true
+  android_width: 200
+  android_height: 200
+  ios_width: 200
+  ios_height: 200
 
 flutter:
   uses-material-design: true
